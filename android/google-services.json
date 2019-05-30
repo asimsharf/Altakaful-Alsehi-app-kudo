@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "319777778028",
+    "firebase_url": "https://takaful-da75e.firebaseio.com",
+    "project_id": "takaful-da75e",
+    "storage_bucket": "takaful-da75e.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:319777778028:android:0532530d054fd00d",
+        "android_client_info": {
+          "package_name": "com.alsehi.takaful"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "319777778028-5gjq4cao8vou560bhcl3vu71euk3t8tj.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCCgJc7H9m-iDxqfFeFSoUAKbnb_cVrpUU"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

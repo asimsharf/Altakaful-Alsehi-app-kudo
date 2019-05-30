@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">takafulAPIs</string>
+    <string name="facebook_app_id">543741562722164</string>
+    <string name="fb_login_protocol_scheme">fb543741562722164</string>
+
+</resources>

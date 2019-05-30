@@ -1,0 +1,75 @@
+name: takaful
+description: A new Flutter project.
+
+version: 1.0.0+1
+
+environment:
+  sdk: ">=2.1.0 <3.0.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+  splashscreen: ^1.2.0
+  google_maps_flutter: ^0.5.7
+  flutter_facebook_login: ^1.1.1
+  flutter_google_places: ^0.2.2
+  google_fonts_arabic: ^1.1.7
+  smooth_star_rating: 1.0.2
+  location: ^2.3.5
+  keyclic_sdk_api: ^1.33.3
+  firebase_core: ^0.3.4
+  rflutter_alert: ^1.0.2
+  transparent_image: ^1.0.0
+  url_launcher: ^5.0.2
+  barcode_scan: ^1.0.0
+  image_picker: ^0.6.0+1
+  shared_preferences: ^0.5.2+1
+  json_annotation: ^2.0.0
+  image_cropper: ^1.0.1
+  intro_slider: ^1.0.8
+  carousel_pro: ^0.0.13
+  connectivity: ^0.4.3+1
+  intl: ^0.15.7
+  flutter_localizations:
+    sdk: flutter
+
+  cupertino_icons: ^0.1.2
+  font_awesome_flutter: ^8.0.0
+  sqflite: ^1.1.5
+  path_provider: ^0.5.0+1
+  image: "^2.0.4"
+  pull_to_refresh: ^1.1.6
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+#  intl_translation: ^0.17.1
+  build_runner: ^1.0.0
+  json_serializable: ^2.0.0
+
+flutter:
+
+  uses-material-design: true
+
+  assets:
+    - assets/locale/localization_en.json
+    - assets/locale/localization_ar.json
+    - assets/locale/localization_hin.json
+    - assets/locale/localization_ur.json
+    - assets/images/photo_camera.png
+    - assets/images/logo.png
+    - assets/images/white_logo.png
+    - assets/images/bg.png
+    - assets/images/avatar.png
+    - assets/images/drawerbg.jpg
+    - assets/images/person.png
+    - assets/images/ic_launcher.png
+    - assets/login_background.jpg
+
+  fonts:
+    - family: Amiri
+      fonts:
+        - asset: assets/fonts/Amiri-Bold.ttf
+        - asset: assets/fonts/Amiri-BoldItalic.ttf
+        - asset: assets/fonts/Amiri-Italic.ttf
+        - asset: assets/fonts/Amiri-Regular.ttf

@@ -1,0 +1,1 @@
+library flutter_app.services.localization.app_translations;
