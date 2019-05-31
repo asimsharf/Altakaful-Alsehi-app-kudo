@@ -10,12 +10,10 @@ dependencies:
   flutter:
     sdk: flutter
   splashscreen: ^1.2.0
-  google_maps_flutter: ^0.5.7
+
   flutter_facebook_login: ^1.1.1
-  flutter_google_places: ^0.2.2
   google_fonts_arabic: ^1.1.7
   smooth_star_rating: 1.0.2
-  location: ^2.3.5
   keyclic_sdk_api: ^1.33.3
   firebase_core: ^0.3.4
   rflutter_alert: ^1.0.2
@@ -39,6 +37,15 @@ dependencies:
   path_provider: ^0.5.0+1
   image: "^2.0.4"
   pull_to_refresh: ^1.1.6
+
+
+  #google_maps_flutter: ^0.5.7
+  #flutter_google_places: ^0.2.2
+  location: ^2.3.5
+
+  google_maps_flutter: ^0.0.3
+  flutter_google_places: ^0.1.4
+#  location: ^1.4.1
 
 dev_dependencies:
   flutter_test:

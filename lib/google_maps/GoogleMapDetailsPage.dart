@@ -4,7 +4,7 @@
 //import 'package:google_maps_webservice/places.dart';
 //import 'package:takaful/screens/account_doctor/DoctorsPages.dart';
 //
-//const kGoogleApiKey = "AIzaSyBU7XxG0zI-MQzLnfWheKFTkWx-jTm19E0";
+//const kGoogleApiKey = "AIzaSyBe_JBPIX1lStjzqyrWNox1aLpoqFbkFzU";
 //GoogleMapsPlaces _places = GoogleMapsPlaces(apiKey: kGoogleApiKey);
 //
 //class PlaceDetailWidget extends StatefulWidget {

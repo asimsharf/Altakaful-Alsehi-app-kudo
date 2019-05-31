@@ -5,7 +5,7 @@
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <application android:name="io.flutter.app.FlutterApplication" android:label="التكافل الصحي" android:icon="@mipmap/ic_launcher">
 
-        <meta-data android:name="com.google.android.geo.API_KEY" android:value="AIzaSyBU7XxG0zI-MQzLnfWheKFTkWx-jTm19E0"/>
+        <meta-data android:name="com.google.android.geo.API_KEY" android:value="AIzaSyBe_JBPIX1lStjzqyrWNox1aLpoqFbkFzU"/>
 
         <activity android:name=".MainActivity" android:launchMode="singleTop" android:theme="@style/LaunchTheme" android:configChanges="orientation|keyboardHidden|keyboard|screenSize|locale|layoutDirection|fontScale|screenLayout|density|uiMode" android:hardwareAccelerated="true" android:windowSoftInputMode="adjustResize">
 

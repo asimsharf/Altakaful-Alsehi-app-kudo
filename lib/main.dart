@@ -66,7 +66,8 @@ class _AppState extends State<App> {
         return null;
       },
       onUnknownRoute: (RouteSettings settings) {
-        return MaterialPageRoute(builder: (BuildContext context) => Home());
+        return MaterialPageRoute(
+            builder: (BuildContext context) => HomeMainPage());
       },
     );
   }

@@ -11,9 +11,18 @@ class _CreateEmployeeState extends State<CreateEmployee> {
   String name;
   String phone;
   String email;
-  String functionalNumber;
+  String identity_number;
   String department;
   String password;
+
+  TextEditingController nameController = TextEditingController();
+  TextEditingController identity_numberController = TextEditingController();
+  TextEditingController phoneController = TextEditingController();
+  TextEditingController departmentController = TextEditingController();
+  TextEditingController emailController = TextEditingController();
+  TextEditingController passwordController = TextEditingController();
+  TextEditingController re_passwordController = TextEditingController();
+  TextEditingController functionalNumberController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -75,7 +84,7 @@ class _CreateEmployeeState extends State<CreateEmployee> {
               keyboardType: TextInputType.number,
               onChanged: (String value) {
                 setState(() {
-                  functionalNumber = value;
+                  identity_number = value;
                 });
               },
             ),

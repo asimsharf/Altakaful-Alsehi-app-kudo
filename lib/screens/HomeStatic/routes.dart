@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:takaful/TestsFolder/LoginTow/screens/home/home_screen.dart';
 import 'package:takaful/TestsFolder/LoginTow/screens/login/login_screen.dart';
+import 'package:takaful/google_maps/Google.dart';
 import 'package:takaful/language/language_selector_page.dart';
 import 'package:takaful/screens/account_center/CenterLogin.dart';
 import 'package:takaful/screens/account_center/CenterOffers.dart';
@@ -16,7 +17,7 @@ import '../SubscriptionPage.dart';
 //  '/': (BuildContext context) => new LoginScreen(),
 
 final routes = <String, WidgetBuilder>{
-  '/Home': (BuildContext context) => Home(),
+  '/Home': (BuildContext context) => HomeMainPage(),
   '/ProfilePage': (BuildContext context) => ProfilePage(),
   '/Subscription': (BuildContext context) => Subscription(),
   '/RequestCard': (BuildContext context) => RequestCard(),
@@ -26,4 +27,5 @@ final routes = <String, WidgetBuilder>{
   '/LanguageSelectorPage': (BuildContext context) => LanguageSelectorPage(),
   '/LoginScreen': (BuildContext context) => new LoginScreen(),
   '/HomeScreen': (BuildContext context) => new HomeScreen(),
+  '/GoogleMaps': (BuildContext context) => new Home(),
 };

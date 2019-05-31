@@ -6,7 +6,6 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts_arabic/fonts.dart';
 import 'package:http/http.dart' as http;
 import 'package:smooth_star_rating/smooth_star_rating.dart';
-import 'package:takaful/TestsFolder/APIs.dart';
 import 'package:takaful/language/app_translations.dart';
 import 'package:takaful/model/ModelCenters.dart';
 import 'package:takaful/screens/About.dart';
@@ -15,13 +14,13 @@ import 'package:takaful/screens/FilterSearch.dart';
 import 'package:takaful/screens/account_center/CenterDetails.dart';
 import 'package:takaful/ui_widgets/TextIcon.dart';
 
-class Home extends StatefulWidget {
+class HomeMainPage extends StatefulWidget {
   final Widget child;
-  Home({Key key, this.child}) : super(key: key);
-  _HomeState createState() => _HomeState();
+  HomeMainPage({Key key, this.child}) : super(key: key);
+  _HomeMainPageState createState() => _HomeMainPageState();
 }
 
-class _HomeState extends State<Home> {
+class _HomeMainPageState extends State<HomeMainPage> {
   TextEditingController __editingController = TextEditingController();
   final _duplicateItems = List<String>.generate(100, (i) => "إسم المركز $i");
   var _items = List<String>();
@@ -59,11 +58,11 @@ class _HomeState extends State<Home> {
 
   @override
   Widget build(BuildContext context) {
-    final GlobalKey<ScaffoldState> _scaffoldHomePageKey =
+    final GlobalKey<ScaffoldState> _scaffoldHomeMainPagePageKey =
         new GlobalKey<ScaffoldState>();
 
     return new Scaffold(
-      key: _scaffoldHomePageKey,
+      key: _scaffoldHomeMainPagePageKey,
       appBar: new AppBar(
         title: Text(
           AppTranslations.of(context).text("takaful_alsehi"),
@@ -428,8 +427,7 @@ class _HomeState extends State<Home> {
       ),
       floatingActionButton: new FloatingActionButton(
         onPressed: () {
-          Navigator.of(context)
-              .push(new MaterialPageRoute(builder: (context) => new APIs()));
+          Navigator.popAndPushNamed(context, '/GoogleMaps');
         },
         child: Icon(
           Icons.location_on,

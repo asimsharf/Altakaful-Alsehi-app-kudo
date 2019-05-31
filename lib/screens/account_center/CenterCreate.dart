@@ -72,6 +72,15 @@ class _CenterCreate extends State<CenterCreate>
     return "Sucess";
   }
 
+  // تخصيص قيمة كلمة المرور
+  bool _obscureText = true;
+  // عرض حالة كلمة المرور
+  void _toggle() {
+    setState(() {
+      _obscureText = !_obscureText;
+    });
+  }
+
   @override
   void initState() {
     super.initState();
@@ -102,6 +111,8 @@ class _CenterCreate extends State<CenterCreate>
   TextEditingController identity_numberController = TextEditingController();
   TextEditingController phoneController = TextEditingController();
   TextEditingController emailController = TextEditingController();
+  TextEditingController passwordController = TextEditingController();
+  TextEditingController re_passwordController = TextEditingController();
 //==================================================================
 
   @override
@@ -120,7 +131,7 @@ class _CenterCreate extends State<CenterCreate>
             child: new ListView(
               padding: const EdgeInsets.all(5.0),
               children: <Widget>[
-                //Center Information
+                //#####Center Information#####//
                 new Padding(
                   padding: const EdgeInsets.only(top: 2.0),
                   child: new Text(
@@ -304,7 +315,6 @@ class _CenterCreate extends State<CenterCreate>
                               value: item['id'].toString(),
                             );
                           }).toList(),
-                          value: _myCitySelection,
                           onChanged: (newVal) {
                             setState(() {
                               New_Model_Centers.city_id = newVal;
@@ -312,6 +322,7 @@ class _CenterCreate extends State<CenterCreate>
                               state.didChange(newVal);
                             });
                           },
+                          value: _myCitySelection,
                         ),
                       ),
                     );
@@ -427,7 +438,7 @@ class _CenterCreate extends State<CenterCreate>
                       val.isEmpty ? 'يرجى إدخال وصف المركز' : null,
                   onSaved: (val) => New_Model_Centers.description = val,
                 ),
-                //Adminstrator inforomation
+                //#####Adminstrator inforomation#####//
                 new Padding(
                   padding: const EdgeInsets.only(top: 20.0),
                   child: new Text(
@@ -499,7 +510,7 @@ class _CenterCreate extends State<CenterCreate>
                   decoration: new InputDecoration(
                     contentPadding: const EdgeInsets.symmetric(vertical: 0.0),
                     counterStyle: TextStyle(color: Color(0xFF37505D)),
-                    hintText: 'أدخل عنوان البريد الإلكتروني',
+                    hintText: 'you@example.com',
                     labelText: 'البريد الإلكتروني (إختياري)',
                     prefixIcon: Icon(Icons.email),
                     fillColor: Color(0xFF37505D),
@@ -519,6 +530,71 @@ class _CenterCreate extends State<CenterCreate>
                       : 'من فضلك أدخل بريد أليكترونى صحيح',
                   keyboardType: TextInputType.emailAddress,
                   onSaved: (val) => New_Model_Centers.email = val,
+                ),
+                //Password
+                new Column(
+                  children: <Widget>[
+                    new TextFormField(
+                      controller: passwordController,
+                      maxLength: 10,
+                      decoration: new InputDecoration(
+                          counterStyle: TextStyle(color: Color(0xFF37505D)),
+                          prefixIcon: Icon(Icons.lock),
+                          suffixIcon: FlatButton(
+                              onPressed: _toggle,
+                              child:
+                                  new Text(_obscureText ? "إظهار" : "إخفاء")),
+                          hintText: 'إدخل كلمة المرور',
+                          labelText: "كلمة المرور *",
+                          labelStyle: TextStyle(
+                              fontFamily: ArabicFonts.Cairo,
+                              package: 'google_fonts_arabic',
+                              fontWeight: FontWeight.bold,
+                              color: Color(0xFF37505D))),
+                      keyboardType: TextInputType.text,
+                      inputFormatters: [
+                        new LengthLimitingTextInputFormatter(30)
+                      ],
+                      validator: (val) => val.length < 6 || val.isEmpty
+                          ? 'يرجى إدخال كلمة مرور أكبر من 6 أحرف'
+                          : null,
+                      onSaved: (val) => New_Model_Centers.password = val,
+                      obscureText: _obscureText,
+                    ),
+                  ],
+                ),
+                //Re type Password
+                new Column(
+                  children: <Widget>[
+                    new TextFormField(
+                      controller: re_passwordController,
+                      maxLength: 10,
+                      decoration: new InputDecoration(
+                          counterStyle: TextStyle(color: Color(0xFF37505D)),
+                          prefixIcon: Icon(Icons.lock),
+                          suffixIcon: FlatButton(
+                              onPressed: _toggle,
+                              child:
+                                  new Text(_obscureText ? "إظهار" : "إخفاء")),
+                          hintText: 'إعادة إدخال كلمة المرور',
+                          labelText: "إعادة كلمة المرور *",
+                          labelStyle: TextStyle(
+                              fontFamily: ArabicFonts.Cairo,
+                              package: 'google_fonts_arabic',
+                              fontWeight: FontWeight.bold,
+                              color: Color(0xFF37505D))),
+                      keyboardType: TextInputType.text,
+                      inputFormatters: [
+                        new LengthLimitingTextInputFormatter(30)
+                      ],
+                      validator: (value) {
+                        if (value != passwordController.text) {
+                          return 'عفواً كلمة المرور لا تتطابق !';
+                        }
+                      },
+                      obscureText: _obscureText,
+                    ),
+                  ],
                 ),
                 //Identity_number
                 new TextFormField(
