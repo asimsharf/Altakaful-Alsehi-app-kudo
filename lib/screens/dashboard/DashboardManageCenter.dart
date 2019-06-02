@@ -2,12 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts_arabic/fonts.dart';
 import 'package:takaful/language/app_translations.dart';
 import 'package:takaful/screens/dashboard/Admins.dart';
-import 'package:takaful/screens/dashboard/Centers.dart';
 import 'package:takaful/screens/dashboard/Doctors.dart';
 import 'package:takaful/screens/dashboard/Serivces.dart';
 
 import 'Bloggers.dart';
 import 'Bookings.dart';
+import 'Centers.dart';
 import 'Department.dart';
 import 'Offers.dart';
 import 'Settings.dart';
@@ -36,7 +36,8 @@ class DashboardManageCenter extends StatelessWidget {
           padding: EdgeInsets.all(3.0),
           children: <Widget>[
             GestureDetector(
-              child: makeDashboardItem("المركز", Icons.home),
+              child: makeDashboardItem(
+                  AppTranslations.of(context).text("center"), Icons.home),
               onTap: () {
                 Navigator.push(
                   context,
@@ -47,7 +48,9 @@ class DashboardManageCenter extends StatelessWidget {
               },
             ),
             GestureDetector(
-              child: makeDashboardItem("المسؤول", Icons.person),
+              child: makeDashboardItem(
+                  AppTranslations.of(context).text("administrator"),
+                  Icons.person),
               onTap: () {
                 Navigator.push(
                   context,
@@ -58,7 +61,8 @@ class DashboardManageCenter extends StatelessWidget {
               },
             ),
             GestureDetector(
-              child: makeDashboardItem("الأقسام", Icons.list),
+              child: makeDashboardItem(
+                  AppTranslations.of(context).text("department"), Icons.list),
               onTap: () {
                 Navigator.push(
                   context,
@@ -69,7 +73,9 @@ class DashboardManageCenter extends StatelessWidget {
               },
             ),
             GestureDetector(
-              child: makeDashboardItem("الخدمات", Icons.local_offer),
+              child: makeDashboardItem(
+                  AppTranslations.of(context).text("services"),
+                  Icons.local_offer),
               onTap: () {
                 Navigator.push(
                   context,
@@ -80,7 +86,9 @@ class DashboardManageCenter extends StatelessWidget {
               },
             ),
             GestureDetector(
-              child: makeDashboardItem("العروض", Icons.call_received),
+              child: makeDashboardItem(
+                  AppTranslations.of(context).text("offers"),
+                  Icons.call_received),
               onTap: () {
                 Navigator.push(
                   context,
@@ -91,7 +99,9 @@ class DashboardManageCenter extends StatelessWidget {
               },
             ),
             GestureDetector(
-              child: makeDashboardItem("الأطباء", Icons.supervisor_account),
+              child: makeDashboardItem(
+                  AppTranslations.of(context).text("doctors"),
+                  Icons.supervisor_account),
               onTap: () {
                 Navigator.push(
                   context,
@@ -102,7 +112,9 @@ class DashboardManageCenter extends StatelessWidget {
               },
             ),
             GestureDetector(
-              child: makeDashboardItem("الأخبار", Icons.show_chart),
+              child: makeDashboardItem(
+                  AppTranslations.of(context).text("blogger"),
+                  Icons.show_chart),
               onTap: () {
                 Navigator.push(
                   context,
@@ -113,7 +125,8 @@ class DashboardManageCenter extends StatelessWidget {
               },
             ),
             GestureDetector(
-              child: makeDashboardItem("الحجوزات", Icons.book),
+              child: makeDashboardItem(
+                  AppTranslations.of(context).text("booking"), Icons.book),
               onTap: () {
                 Navigator.push(
                   context,
@@ -124,7 +137,8 @@ class DashboardManageCenter extends StatelessWidget {
               },
             ),
             GestureDetector(
-              child: makeDashboardItem("الإعدادت", Icons.settings),
+              child: makeDashboardItem(
+                  AppTranslations.of(context).text("settings"), Icons.settings),
               onTap: () {
                 Navigator.push(
                   context,

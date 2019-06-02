@@ -40,7 +40,7 @@ class _CreateMarketter extends State<CreateMarketter>
     'انثى',
   ];
   String _gender = '';
-  Model_Client New_Model_Client = new Model_Client();
+  Model_Client _newModelClient = new Model_Client();
   final TextEditingController _controller = new TextEditingController();
   //عرض بيانات التاريخ والوقت
   Future _chooseDate(BuildContext context, String initialDateString) async {
@@ -225,7 +225,7 @@ class _CreateMarketter extends State<CreateMarketter>
                   keyboardType: TextInputType.text,
                   inputFormatters: [new LengthLimitingTextInputFormatter(30)],
                   validator: (val) => val.isEmpty ? 'يرجى إدخال الإسم' : null,
-                  onSaved: (val) => New_Model_Client.name = val,
+                  onSaved: (val) => _newModelClient.name = val,
                 ),
                 //رقم الهوية
                 new TextFormField(
@@ -255,7 +255,7 @@ class _CreateMarketter extends State<CreateMarketter>
                   validator: (value) => isValidIdNumber(value)
                       ? null
                       : 'يجب إدخال رقم الهوية كـ (----------)',
-                  onSaved: (val) => New_Model_Client.identity_number = val,
+                  onSaved: (val) => _newModelClient.identity_number = val,
                 ),
                 //الهاتف
                 new TextFormField(
@@ -285,7 +285,7 @@ class _CreateMarketter extends State<CreateMarketter>
                   validator: (value) => isValidPhoneNumber(value)
                       ? null
                       : 'يجب إدخال رقم الهاتف كـ (###) ### - ####',
-                  onSaved: (val) => New_Model_Client.phone = val,
+                  onSaved: (val) => _newModelClient.phone = val,
                 ),
                 //البريد الالكتروني
                 new TextFormField(
@@ -307,7 +307,7 @@ class _CreateMarketter extends State<CreateMarketter>
                     ),
                   ),
                   keyboardType: TextInputType.emailAddress,
-                  onSaved: (val) => New_Model_Client.email = val,
+                  onSaved: (val) => _newModelClient.email = val,
                 ),
                 //كلمة المرور
                 Column(
@@ -335,7 +335,7 @@ class _CreateMarketter extends State<CreateMarketter>
                       validator: (val) => val.length < 6 || val.isEmpty
                           ? 'يرجى إدخال كلمة مرور أكبر من 6 أحرف'
                           : null,
-                      onSaved: (val) => New_Model_Client.password = val,
+                      onSaved: (val) => _newModelClient.password = val,
                       obscureText: _obscureText,
                     ),
                   ],
@@ -363,7 +363,7 @@ class _CreateMarketter extends State<CreateMarketter>
                   keyboardType: TextInputType.text,
                   inputFormatters: [new LengthLimitingTextInputFormatter(40)],
                   //validator: (val) => val.isEmpty ? 'يرجى إدخال العنوان' : null,
-                  onSaved: (val) => New_Model_Client.address_text = val,
+                  onSaved: (val) => _newModelClient.address_text = val,
                 ),
                 //الجنس
                 new FormField<String>(
@@ -390,7 +390,7 @@ class _CreateMarketter extends State<CreateMarketter>
                           isDense: true,
                           onChanged: (String newValue) {
                             setState(() {
-                              New_Model_Client.gender = newValue;
+                              _newModelClient.gender = newValue;
                               _gender = newValue;
                               state.didChange(newValue);
                             });
@@ -438,7 +438,7 @@ class _CreateMarketter extends State<CreateMarketter>
                     validator: (val) =>
                         isValidDateBarth(val) ? null : 'ليس تاريخ صالح',
                     onSaved: (val) =>
-                        New_Model_Client.birth_date = convertToDate(val),
+                        _newModelClient.birth_date = convertToDate(val),
                   )),
                 ]),
                 //الدولة
@@ -518,7 +518,7 @@ class _CreateMarketter extends State<CreateMarketter>
                           }).toList(),
                           onChanged: (newVal) {
                             setState(() {
-                              New_Model_Client.city_id = newVal;
+                              _newModelClient.city_id = newVal;
                               _myCitySelection = newVal;
                               state.didChange(newVal);
                             });
@@ -642,23 +642,23 @@ class _CreateMarketter extends State<CreateMarketter>
     } else {
       form.save(); //This invokes each onSaved event
       print('***********************************************************');
-      print('Form save called, New_Model_Client is now up to date...');
-      print('City ID: ${New_Model_Client.city_id}');
-      print('Full Name: ${New_Model_Client.name}');
-      print('Phone: ${New_Model_Client.phone}');
-      print('Email: ${New_Model_Client.email}');
-      print('Password: ${New_Model_Client.password}');
-      print('Nationality: ${New_Model_Client.address_text}');
-      print('Address: ${New_Model_Client.address_text}');
-      print('Gender: ${New_Model_Client.gender}');
-      print('Birth Date: ${New_Model_Client.birth_date}');
-      print('Identity Number: ${New_Model_Client.identity_number}');
+      print('Form save called, _newModelClient is now up to date...');
+      print('City ID: ${_newModelClient.city_id}');
+      print('Full Name: ${_newModelClient.name}');
+      print('Phone: ${_newModelClient.phone}');
+      print('Email: ${_newModelClient.email}');
+      print('Password: ${_newModelClient.password}');
+      print('Nationality: ${_newModelClient.address_text}');
+      print('Address: ${_newModelClient.address_text}');
+      print('Gender: ${_newModelClient.gender}');
+      print('Birth Date: ${_newModelClient.birth_date}');
+      print('Identity Number: ${_newModelClient.identity_number}');
       print('***********************************************************');
       print('######################################################');
       print('Submitting to back end...');
       print('TODO - we will write the submission part next...');
       var cardService = new Api_Client_Services();
-      cardService.createClient(New_Model_Client).then(
+      cardService.createClient(_newModelClient).then(
           (value) => showMessage(' تم إنشاء حساب مشترك جديد  ! ', Colors.blue));
       print('######################################################');
     }

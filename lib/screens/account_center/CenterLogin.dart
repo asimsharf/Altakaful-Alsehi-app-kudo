@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts_arabic/fonts.dart';
+import 'package:takaful/language/app_translations.dart';
 import 'package:takaful/screens/account_center/CenterCreate.dart';
 import 'package:takaful/screens/account_reset/ResetPassword.dart';
 import 'package:takaful/screens/dashboard/DashboardManageCenter.dart';
@@ -36,7 +37,7 @@ class _UserLogin extends State<CenterLogin>
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             new Text(
-              "تسجيل دخول المراكز الطبية",
+              AppTranslations.of(context).text("login_centers"),
               style: TextStyle(
                 color: Color(0xFF37505D),
                 fontSize: 25.0,
@@ -54,8 +55,8 @@ class _UserLogin extends State<CenterLogin>
                   children: <Widget>[
                     TextFormField(
                       decoration: new InputDecoration(
-                          prefixIcon: Icon(Icons.phone),
-                          labelText: "البريد الإلكتروني",
+                          prefixIcon: Icon(Icons.mail_outline),
+                          labelText: AppTranslations.of(context).text("email"),
                           fillColor: Color(0xFF37505D),
                           labelStyle: TextStyle(
                             fontFamily: ArabicFonts.Cairo,
@@ -67,7 +68,8 @@ class _UserLogin extends State<CenterLogin>
                     TextFormField(
                       decoration: new InputDecoration(
                           prefixIcon: Icon(Icons.lock),
-                          labelText: "كلمة المرور",
+                          labelText:
+                              AppTranslations.of(context).text("password"),
                           fillColor: Color(0xFF37505D),
                           labelStyle: TextStyle(
                             fontFamily: ArabicFonts.Cairo,
@@ -100,7 +102,7 @@ class _UserLogin extends State<CenterLogin>
                             builder: (context) => new ResetPassword()));
                       },
                       child: new Text(
-                        "هل نسيت كلمة المرور؟ إعادة تعيين الان",
+                        AppTranslations.of(context).text("forget_password"),
                         style: TextStyle(
                           color: Color(0xFF37505D),
                           fontFamily: ArabicFonts.Cairo,
@@ -117,7 +119,7 @@ class _UserLogin extends State<CenterLogin>
                             builder: (context) => new CenterCreate()));
                       },
                       child: new Text(
-                        "تسجيل مركز جديد الأن",
+                        AppTranslations.of(context).text("register_new_center"),
                         style: TextStyle(
                           color: Color(0xFF37505D),
                           fontFamily: ArabicFonts.Cairo,

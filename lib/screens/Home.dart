@@ -427,7 +427,8 @@ class _HomeMainPageState extends State<HomeMainPage> {
       ),
       floatingActionButton: new FloatingActionButton(
         onPressed: () {
-          Navigator.popAndPushNamed(context, '/GoogleMaps');
+          //Navigator.popAndPushNamed(context, '/HomeGoogleMap');
+          Navigator.pushNamed(context, '/HomeGoogleMap');
         },
         child: Icon(
           Icons.location_on,

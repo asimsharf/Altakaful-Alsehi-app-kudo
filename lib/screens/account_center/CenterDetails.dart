@@ -25,8 +25,8 @@ class CenterDetails extends StatefulWidget {
   String linkedin;
   String administrator;
   String identity_number;
-  String email;
   String phone;
+  String email;
   String admin_join_date;
   String Expire_from;
   String Expire_to;
@@ -47,7 +47,6 @@ class CenterDetails extends StatefulWidget {
     this.center,
     this.description,
     this.logo,
-    this.phone,
     this.profile,
     this.join_date,
     this.open_at,
@@ -60,6 +59,7 @@ class CenterDetails extends StatefulWidget {
     this.admin_id,
     this.administrator,
     this.identity_number,
+    this.phone,
     this.email,
     this.admin_join_date,
     this.Expire_from,

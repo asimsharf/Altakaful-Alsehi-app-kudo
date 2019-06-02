@@ -24,17 +24,17 @@ class _CenterCreate extends State<CenterCreate>
 
   ModelCenters New_Model_Centers = new ModelCenters();
 
-  //Get all Centers
+  //fetch all Centers
   String _myCenterTypeSelection;
-  List CentersData = List(); //edited line
+  List centersData = List(); //edited line
   Future<String> getCenters() async {
-    final String CentersUrl =
+    final String centersUrl =
         "http://23.111.185.155:4000/takaful/api/center_type";
-    var CentersRes = await http.get(Uri.encodeFull(CentersUrl),
+    var centersRes = await http.get(Uri.encodeFull(centersUrl),
         headers: {"Accept": "application/json"});
-    var CentersResBody = json.decode(CentersRes.body);
+    var centersResBody = json.decode(centersRes.body);
     setState(() {
-      CentersData = CentersResBody['response'];
+      centersData = centersResBody['response'];
     });
     return "Sucess";
   }
@@ -42,14 +42,14 @@ class _CenterCreate extends State<CenterCreate>
 //==================================================================
   //Get all country
   String _myCountrySelection;
-  List CountryData = List(); //edited line
+  List countryData = List(); //edited line
   Future<String> getCountry() async {
-    final String CountryUrl = "http://23.111.185.155:4000/takaful/api/country";
-    var CountryRes = await http.get(Uri.encodeFull(CountryUrl),
+    final String countryUrl = "http://23.111.185.155:4000/takaful/api/country";
+    var countryRes = await http.get(Uri.encodeFull(countryUrl),
         headers: {"Accept": "application/json"});
-    var CountryResBody = json.decode(CountryRes.body);
+    var countryResBody = json.decode(countryRes.body);
     setState(() {
-      CountryData = CountryResBody['response'];
+      countryData = countryResBody['response'];
     });
     return "Sucess";
   }
@@ -57,24 +57,24 @@ class _CenterCreate extends State<CenterCreate>
 //==================================================================
   //Get all cities by country id
   String _myCitySelection;
-  List CityData = List(); //edited line
+  List cityData = List(); //edited line
   Future<String> getCityByCountryId() async {
-    final String _CityUrl =
+    final String _cityUrl =
         "http://23.111.185.155:4000/takaful/api/country/2/city";
 
-    print(_CityUrl);
-    var _CityRes = await http
-        .get(Uri.encodeFull(_CityUrl), headers: {"Accept": "application/json"});
-    var CityResBody = json.decode(_CityRes.body);
+    print(_cityUrl);
+    var _cityRes = await http
+        .get(Uri.encodeFull(_cityUrl), headers: {"Accept": "application/json"});
+    var cityResBody = json.decode(_cityRes.body);
     setState(() {
-      CityData = CityResBody['response'];
+      cityData = cityResBody['response'];
     });
     return "Sucess";
   }
 
-  // تخصيص قيمة كلمة المرور
+  // specific password value
   bool _obscureText = true;
-  // عرض حالة كلمة المرور
+  // show password state
   void _toggle() {
     setState(() {
       _obscureText = !_obscureText;
@@ -108,11 +108,11 @@ class _CenterCreate extends State<CenterCreate>
   TextEditingController twitterController = TextEditingController();
   TextEditingController linkedinController = TextEditingController();
   TextEditingController administratorController = TextEditingController();
-  TextEditingController identity_numberController = TextEditingController();
+  TextEditingController identityNumberController = TextEditingController();
   TextEditingController phoneController = TextEditingController();
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
-  TextEditingController re_passwordController = TextEditingController();
+  TextEditingController rePasswordController = TextEditingController();
 //==================================================================
 
   @override
@@ -219,10 +219,10 @@ class _CenterCreate extends State<CenterCreate>
                         ),
                         errorText: state.hasError ? state.errorText : null,
                       ),
-                      isEmpty: CentersData == '',
+                      isEmpty: centersData == '',
                       child: new DropdownButtonHideUnderline(
                         child: new DropdownButton(
-                          items: CentersData.map((item) {
+                          items: centersData.map((item) {
                             return new DropdownMenuItem(
                               child: new Text(item['ar_name']),
                               value: item['id'].toString(),
@@ -263,10 +263,10 @@ class _CenterCreate extends State<CenterCreate>
                         ),
                         errorText: state.hasError ? state.errorText : null,
                       ),
-                      isEmpty: CountryData == '',
+                      isEmpty: countryData == '',
                       child: new DropdownButtonHideUnderline(
                         child: new DropdownButton(
-                          items: CountryData.map((item) {
+                          items: countryData.map((item) {
                             return new DropdownMenuItem(
                               child: new Text(item['ar_title']),
                               value: item['id'].toString(),
@@ -306,10 +306,10 @@ class _CenterCreate extends State<CenterCreate>
                         ),
                         errorText: state.hasError ? state.errorText : null,
                       ),
-                      isEmpty: CityData == '',
+                      isEmpty: cityData == '',
                       child: new DropdownButtonHideUnderline(
                         child: new DropdownButton(
-                          items: CityData.map((item) {
+                          items: cityData.map((item) {
                             return new DropdownMenuItem(
                               child: new Text(item['ar_title']),
                               value: item['id'].toString(),
@@ -567,7 +567,7 @@ class _CenterCreate extends State<CenterCreate>
                 new Column(
                   children: <Widget>[
                     new TextFormField(
-                      controller: re_passwordController,
+                      controller: rePasswordController,
                       maxLength: 10,
                       decoration: new InputDecoration(
                           counterStyle: TextStyle(color: Color(0xFF37505D)),
@@ -598,7 +598,7 @@ class _CenterCreate extends State<CenterCreate>
                 ),
                 //Identity_number
                 new TextFormField(
-                  controller: identity_numberController,
+                  controller: identityNumberController,
                   maxLength: 14,
                   decoration: new InputDecoration(
                       contentPadding: const EdgeInsets.symmetric(vertical: 0.0),

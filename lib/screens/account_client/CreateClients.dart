@@ -40,9 +40,9 @@ class _CreateClients extends State<CreateClients>
     'انثى',
   ];
   String _gender = '';
-  Model_Client New_Model_Client = new Model_Client();
+  Model_Client _newModelClient = new Model_Client();
   final TextEditingController _controller = new TextEditingController();
-  //عرض بيانات التاريخ والوقت
+  //show date time pick up
   Future _chooseDate(BuildContext context, String initialDateString) async {
     var now = new DateTime.now();
     var initialDate = convertToDate(initialDateString) ?? now;
@@ -69,43 +69,50 @@ class _CreateClients extends State<CreateClients>
     }
   }
 
-  //جلب كل الدول
+  //fetch all the counties
   String _mySelection;
   String getID;
-  List CountryData = List(); //edited line
+  List countryData = List(); //edited line
   Future<String> getCountry() async {
-    final String CountryUrl =
-        "http://23.111.185.155:4000/takaful/api/country/1/city";
-    var CountryRes = await http.get(Uri.encodeFull(CountryUrl),
+    final String countryUrl = "http://23.111.185.155:4000/takaful/api/country";
+    var countryRes = await http.get(Uri.encodeFull(countryUrl),
         headers: {"Accept": "application/json"});
-    var CountryResBody = json.decode(CountryRes.body);
+    var countryResBody = json.decode(countryRes.body);
     setState(() {
-      CountryData = CountryResBody['response'];
+      countryData = countryResBody['response'];
     });
     return "Sucess";
   }
 
-  //جلب كل المدن على حسب معرف الدولة
+  //fetch all cities by country ID
   String _myCitySelection;
-  List CityData = List(); //edited line
+  List cityData = List(); //edited line
   Future<String> getCityById() async {
-    final String _CityUrl = "http://23.111.185.155:4000/takaful/api/city";
-    //final String _CityUrl = "http://23.111.185.155:4000/takaful/api/city/${getID}";
-    var _CityRes = await http
-        .get(Uri.encodeFull(_CityUrl), headers: {"Accept": "application/json"});
-    var CityResBody = json.decode(_CityRes.body);
+    final String _cityUrl =
+        "http://23.111.185.155:4000/takaful/api/country/2/city";
+    var _cityRes = await http
+        .get(Uri.encodeFull(_cityUrl), headers: {"Accept": "application/json"});
+    var cityResBody = json.decode(_cityRes.body);
     setState(() {
-      CityData = CityResBody['response'];
+      cityData = cityResBody['response'];
     });
     return "Sucess";
   }
 
-  // تخصيص قيمة كلمة المرور
+  // Specify password
   bool _obscureText = true;
-  // عرض حالة كلمة المرور
+  // show password state
   void _toggle() {
     setState(() {
       _obscureText = !_obscureText;
+    });
+  }
+
+  //to set or update image
+  @override
+  userImage(File _image) {
+    setState(() {
+      this._image = _image;
     });
   }
 
@@ -163,7 +170,7 @@ class _CreateClients extends State<CreateClients>
                         color: Color(0xFF37505D)),
                   ),
                 ),
-                //لإختيار الصورة الشخصية
+                //Select image
                 new GestureDetector(
                   onTap: () => imagePicker.showDialog(context),
                   child: new Center(
@@ -201,7 +208,7 @@ class _CreateClients extends State<CreateClients>
                           ),
                   ),
                 ),
-                //الاسم بالكامل
+                //full name
                 new TextFormField(
                   autofocus: true,
                   maxLength: 32,
@@ -224,9 +231,9 @@ class _CreateClients extends State<CreateClients>
                   keyboardType: TextInputType.text,
                   inputFormatters: [new LengthLimitingTextInputFormatter(30)],
                   validator: (val) => val.isEmpty ? 'يرجى إدخال الإسم' : null,
-                  onSaved: (val) => New_Model_Client.name = val,
+                  onSaved: (val) => _newModelClient.name = val,
                 ),
-                //رقم الهوية
+                //ID number
                 new TextFormField(
                   autofocus: true,
                   maxLength: 14,
@@ -254,9 +261,9 @@ class _CreateClients extends State<CreateClients>
                   validator: (value) => isValidIdentityNumber(value)
                       ? null
                       : 'يجب إدخال رقم الهوية كـ (----------)',
-                  onSaved: (val) => New_Model_Client.identity_number = val,
+                  onSaved: (val) => _newModelClient.identity_number = val,
                 ),
-                //الهاتف
+                //phone
                 new TextFormField(
                   autofocus: true,
                   maxLength: 12,
@@ -284,9 +291,9 @@ class _CreateClients extends State<CreateClients>
                   validator: (value) => isValidPhoneNumber(value)
                       ? null
                       : 'يجب إدخال رقم الهاتف كـ (###) ### - ####',
-                  onSaved: (val) => New_Model_Client.phone = val,
+                  onSaved: (val) => _newModelClient.phone = val,
                 ),
-                //البريد الالكتروني
+                // email
                 new TextFormField(
                   autofocus: true,
                   decoration: const InputDecoration(
@@ -306,40 +313,33 @@ class _CreateClients extends State<CreateClients>
                     ),
                   ),
                   keyboardType: TextInputType.emailAddress,
-                  onSaved: (val) => New_Model_Client.email = val,
+                  onSaved: (val) => _newModelClient.email = val,
                 ),
-                //كلمة المرور
-                Column(
-                  children: <Widget>[
-                    new TextFormField(
-                      maxLength: 10,
-                      decoration: new InputDecoration(
-                          counterStyle: TextStyle(color: Color(0xFF37505D)),
-                          prefixIcon: Icon(Icons.lock),
-                          suffixIcon: FlatButton(
-                              onPressed: _toggle,
-                              child:
-                                  new Text(_obscureText ? "إظهار" : "إخفاء")),
-                          hintText: 'إدخل كلمة المرور',
-                          labelText: "كلمة المرور *",
-                          labelStyle: TextStyle(
-                              fontFamily: ArabicFonts.Cairo,
-                              package: 'google_fonts_arabic',
-                              fontWeight: FontWeight.bold,
-                              color: Color(0xFF37505D))),
-                      keyboardType: TextInputType.text,
-                      inputFormatters: [
-                        new LengthLimitingTextInputFormatter(30)
-                      ],
-                      validator: (val) => val.length < 6 || val.isEmpty
-                          ? 'يرجى إدخال كلمة مرور أكبر من 6 أحرف'
-                          : null,
-                      onSaved: (val) => New_Model_Client.password = val,
-                      obscureText: _obscureText,
-                    ),
-                  ],
+                //password
+                new TextFormField(
+                  maxLength: 10,
+                  decoration: new InputDecoration(
+                      counterStyle: TextStyle(color: Color(0xFF37505D)),
+                      prefixIcon: Icon(Icons.lock),
+                      suffixIcon: FlatButton(
+                          onPressed: _toggle,
+                          child: new Text(_obscureText ? "إظهار" : "إخفاء")),
+                      hintText: 'إدخل كلمة المرور',
+                      labelText: "كلمة المرور *",
+                      labelStyle: TextStyle(
+                          fontFamily: ArabicFonts.Cairo,
+                          package: 'google_fonts_arabic',
+                          fontWeight: FontWeight.bold,
+                          color: Color(0xFF37505D))),
+                  keyboardType: TextInputType.text,
+                  inputFormatters: [new LengthLimitingTextInputFormatter(30)],
+                  validator: (val) => val.length < 6 || val.isEmpty
+                      ? 'يرجى إدخال كلمة مرور أكبر من 6 أحرف'
+                      : null,
+                  onSaved: (val) => _newModelClient.password = val,
+                  obscureText: _obscureText,
                 ),
-                //العنوان
+                //address
                 new TextFormField(
                   autofocus: true,
                   maxLength: 40,
@@ -362,9 +362,9 @@ class _CreateClients extends State<CreateClients>
                   keyboardType: TextInputType.text,
                   inputFormatters: [new LengthLimitingTextInputFormatter(40)],
                   //validator: (val) => val.isEmpty ? 'يرجى إدخال العنوان' : null,
-                  onSaved: (val) => New_Model_Client.address_text = val,
+                  onSaved: (val) => _newModelClient.address_text = val,
                 ),
-                //الجنس
+                //gender
                 new FormField<String>(
                   builder: (FormFieldState<String> state) {
                     return InputDecorator(
@@ -389,7 +389,7 @@ class _CreateClients extends State<CreateClients>
                           isDense: true,
                           onChanged: (String newValue) {
                             setState(() {
-                              New_Model_Client.gender = newValue;
+                              _newModelClient.gender = newValue;
                               _gender = newValue;
                               state.didChange(newValue);
                             });
@@ -405,7 +405,7 @@ class _CreateClients extends State<CreateClients>
                     );
                   },
                 ),
-                //تاريخ الميلاد
+                // dateBarth
                 new Row(children: <Widget>[
                   new Expanded(
                       child: new TextFormField(
@@ -437,10 +437,10 @@ class _CreateClients extends State<CreateClients>
                     validator: (val) =>
                         isValidDateBarth(val) ? null : 'ليس تاريخ صالح',
                     onSaved: (val) =>
-                        New_Model_Client.birth_date = convertToDate(val),
+                        _newModelClient.birth_date = convertToDate(val),
                   )),
                 ]),
-                //الدولة
+                //country
                 new FormField<String>(
                   builder: (FormFieldState<String> state) {
                     return InputDecorator(
@@ -462,10 +462,10 @@ class _CreateClients extends State<CreateClients>
                         ),
                         errorText: state.hasError ? state.errorText : null,
                       ),
-                      isEmpty: CountryData == '',
+                      isEmpty: countryData == '',
                       child: new DropdownButtonHideUnderline(
                         child: new DropdownButton(
-                          items: CountryData.map((item) {
+                          items: countryData.map((item) {
                             getID = item['id'].toString();
                             return new DropdownMenuItem(
                               child: new Text(item['ar_title']),
@@ -483,7 +483,7 @@ class _CreateClients extends State<CreateClients>
                     );
                   },
                 ),
-                //المدينة
+                //city
                 new FormField<String>(
                   builder: (FormFieldState<String> state) {
                     return InputDecorator(
@@ -506,10 +506,10 @@ class _CreateClients extends State<CreateClients>
                         ),
                         errorText: state.hasError ? state.errorText : null,
                       ),
-                      isEmpty: CityData == '',
+                      isEmpty: cityData == '',
                       child: new DropdownButtonHideUnderline(
                         child: new DropdownButton(
-                          items: CityData.map((item) {
+                          items: cityData.map((item) {
                             return new DropdownMenuItem(
                               child: new Text(item['ar_title']),
                               value: item['id'].toString(),
@@ -517,7 +517,7 @@ class _CreateClients extends State<CreateClients>
                           }).toList(),
                           onChanged: (newVal) {
                             setState(() {
-                              New_Model_Client.city_id = newVal;
+                              _newModelClient.city_id = newVal;
                               _myCitySelection = newVal;
                               state.didChange(newVal);
                             });
@@ -533,6 +533,7 @@ class _CreateClients extends State<CreateClients>
                   padding: const EdgeInsets.only(
                       left: 8.0, right: 8.0, bottom: 10.0),
                 ),
+                //register button
                 new MaterialButton(
                   height: 40.0,
                   minWidth: 150.0,
@@ -612,28 +613,33 @@ class _CreateClients extends State<CreateClients>
     );
   }
 
-  bool isValidDateBarth(String birth_date) {
-    if (birth_date.isEmpty) return true;
-    var d = convertToDate(birth_date);
+  //check if the dateBarth is right or not
+  bool isValidDateBarth(String birthDate) {
+    if (birthDate.isEmpty) return true;
+    var d = convertToDate(birthDate);
     return d != null && d.isBefore(new DateTime.now());
   }
 
+//check if the phone number is right or not
   bool isValidPhoneNumber(String input) {
     final RegExp regex = new RegExp(r'^\d\d\d\d\d\d\d\d\d\d\d\d$');
     return regex.hasMatch(input);
   }
 
+// check if the identity number is right
   bool isValidIdentityNumber(String input) {
     final RegExp regex = new RegExp(r'^\d\d\d\d\d\d\d\d\d\d\d\d\d\d$');
     return regex.hasMatch(input);
   }
 
+//check if the email is valid
   bool isValidEmail(String input) {
     final RegExp regex = new RegExp(
         r"^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,253}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,253}[a-zA-Z0-9])?)*$");
     return regex.hasMatch(input);
   }
 
+  //this form use to save the data which submitted to the api
   void _submitForm() {
     final FormState form = _formKey.currentState;
     if (!form.validate()) {
@@ -641,37 +647,31 @@ class _CreateClients extends State<CreateClients>
     } else {
       form.save(); //This invokes each onSaved event
       print('***********************************************************');
-      print('Form save called, New_Model_Client is now up to date...');
-      print('City ID: ${New_Model_Client.city_id}');
-      print('Full Name: ${New_Model_Client.name}');
-      print('Phone: ${New_Model_Client.phone}');
-      print('Email: ${New_Model_Client.email}');
-      print('Password: ${New_Model_Client.password}');
-      print('Nationality: ${New_Model_Client.address_text}');
-      print('Address: ${New_Model_Client.address_text}');
-      print('Gender: ${New_Model_Client.gender}');
-      print('Birth Date: ${New_Model_Client.birth_date}');
-      print('Identity Number: ${New_Model_Client.identity_number}');
+      print('Form save called, _newModelClient is now up to date...');
+      print('City ID: ${_newModelClient.city_id}');
+      print('Full Name: ${_newModelClient.name}');
+      print('Phone: ${_newModelClient.phone}');
+      print('Email: ${_newModelClient.email}');
+      print('Password: ${_newModelClient.password}');
+      print('Nationality: ${_newModelClient.address_text}');
+      print('Address: ${_newModelClient.address_text}');
+      print('Gender: ${_newModelClient.gender}');
+      print('Birth Date: ${_newModelClient.birth_date}');
+      print('Identity Number: ${_newModelClient.identity_number}');
       print('***********************************************************');
       print('######################################################');
       print('Submitting to back end...');
       print('TODO - we will write the submission part next...');
       var cardService = new Api_Client_Services();
-      cardService.createClient(New_Model_Client).then(
+      cardService.createClient(_newModelClient).then(
           (value) => showMessage(' تم إنشاء حساب مشترك جديد  ! ', Colors.blue));
       print('######################################################');
     }
   }
 
+  //this function use to show message or SnackBar
   void showMessage(String message, [MaterialColor color = Colors.red]) {
     _scaffoldKey.currentState.showSnackBar(
         new SnackBar(backgroundColor: color, content: new Text(message)));
-  }
-
-  @override
-  userImage(File _image) {
-    setState(() {
-      this._image = _image;
-    });
   }
 }
