@@ -10,24 +10,58 @@ import 'package:takaful/api/APIsServices.dart';
 import 'package:takaful/language/app_translations.dart';
 import 'package:takaful/model/ModelCenters.dart';
 
-class CenterCreate extends StatefulWidget {
+class EditCreate extends StatefulWidget {
+  int center_id;
+  String address;
+  String center;
+  String description;
+  String logo;
+  String profile;
+  String join_date;
+  String open_at;
+  String close_at;
+  String website;
+  String facebook;
+  String google;
+  String twitter;
+  String linkedin;
+
+  EditCreate({
+    this.center_id,
+    this.address,
+    this.center,
+    this.description,
+    this.logo,
+    this.profile,
+    this.join_date,
+    this.open_at,
+    this.close_at,
+    this.website,
+    this.facebook,
+    this.google,
+    this.twitter,
+    this.linkedin,
+  });
   @override
-  State createState() => _CenterCreate();
+  State createState() => _EditCreate();
 }
 
-class _CenterCreate extends State<CenterCreate>
+class _EditCreate extends State<EditCreate>
     with SingleTickerProviderStateMixin {
   final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
   final GlobalKey<FormState> _formKey = new GlobalKey<FormState>();
-  Animation<double> _iconAnimation;
-  AnimationController _iconAnimationController;
 
-  ModelCenters New_Model_Centers = new ModelCenters();
+  ModelCenters newModelCenters = new ModelCenters();
 
-  //fetch all Centers
+//==================================================================
+
+/*
+ *fetch all Centers types
+ */
+
   String _myCenterTypeSelection;
   List centersData = List(); //edited line
-  Future<String> getCenters() async {
+  Future<String> getCentersType() async {
     final String centersUrl =
         "http://23.111.185.155:4000/takaful/api/center_type";
     var centersRes = await http.get(Uri.encodeFull(centersUrl),
@@ -38,9 +72,14 @@ class _CenterCreate extends State<CenterCreate>
     });
     return "Sucess";
   }
+//==================================================================
 
 //==================================================================
-  //Get all country
+
+/*
+ * Get all country
+ */
+
   String _myCountrySelection;
   List countryData = List(); //edited line
   Future<String> getCountry() async {
@@ -53,15 +92,17 @@ class _CenterCreate extends State<CenterCreate>
     });
     return "Sucess";
   }
+//==================================================================
 
 //==================================================================
-  //Get all cities by country id
+/*
+ * Get all cities by country id
+ */
   String _myCitySelection;
   List cityData = List(); //edited line
   Future<String> getCityByCountryId() async {
     final String _cityUrl =
         "http://23.111.185.155:4000/takaful/api/country/2/city";
-
     print(_cityUrl);
     var _cityRes = await http
         .get(Uri.encodeFull(_cityUrl), headers: {"Accept": "application/json"});
@@ -71,53 +112,50 @@ class _CenterCreate extends State<CenterCreate>
     });
     return "Sucess";
   }
+//==================================================================
 
-  // specific password value
-  bool _obscureText = true;
-  // show password state
-  void _toggle() {
-    setState(() {
-      _obscureText = !_obscureText;
-    });
-  }
+//==================================================================
+//  bool _obscureText = true;
+//  void _toggle() {
+//    setState(() {
+//      _obscureText = !_obscureText;
+//    });
+//  }
+//==================================================================
 
+//==================================================================
   @override
   void initState() {
+    addressController = TextEditingController(text: widget.address);
+    centerController = TextEditingController(text: widget.center);
+    descriptionController = TextEditingController(text: widget.description);
+    websiteController = TextEditingController(text: widget.website);
+    facebookController = TextEditingController(text: widget.facebook);
+    googleController = TextEditingController(text: widget.google);
+    twitterController = TextEditingController(text: widget.twitter);
+    linkedinController = TextEditingController(text: widget.linkedin);
     super.initState();
-    this.getCenters();
+    this.getCentersType();
     this.getCountry();
     this.getCityByCountryId();
-
-    _iconAnimationController = new AnimationController(
-        vsync: this, duration: new Duration(milliseconds: 500));
-    _iconAnimation = new CurvedAnimation(
-      parent: _iconAnimationController,
-      curve: Curves.bounceOut,
-    );
-    _iconAnimation.addListener(() => this.setState(() {}));
-    _iconAnimationController.forward();
   }
-
-//==================================================================
-  TextEditingController addressController = TextEditingController();
-  TextEditingController centerController = TextEditingController();
-  TextEditingController descriptionController = TextEditingController();
-  TextEditingController websiteController = TextEditingController();
-  TextEditingController facebookController = TextEditingController();
-  TextEditingController googleController = TextEditingController();
-  TextEditingController twitterController = TextEditingController();
-  TextEditingController linkedinController = TextEditingController();
-  TextEditingController administratorController = TextEditingController();
-  TextEditingController identityNumberController = TextEditingController();
-  TextEditingController phoneController = TextEditingController();
-  TextEditingController emailController = TextEditingController();
-  TextEditingController passwordController = TextEditingController();
-  TextEditingController rePasswordController = TextEditingController();
 //==================================================================
 
+//==================================================================
+  TextEditingController addressController;
+  TextEditingController centerController;
+  TextEditingController descriptionController;
+  TextEditingController websiteController;
+  TextEditingController facebookController;
+  TextEditingController googleController;
+  TextEditingController twitterController;
+  TextEditingController linkedinController;
+//==================================================================
+
+//==================================================================
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return new Scaffold(
       key: _scaffoldKey,
       body: Padding(
         padding: EdgeInsets.all(16),
@@ -169,7 +207,7 @@ class _CenterCreate extends State<CenterCreate>
                   inputFormatters: [new LengthLimitingTextInputFormatter(30)],
                   validator: (val) =>
                       val.isEmpty ? 'يرجى إدخال إسم المركز' : null,
-                  onSaved: (val) => New_Model_Centers.center = val,
+                  onSaved: (val) => newModelCenters.center = val,
                 ),
                 //Address
                 new TextFormField(
@@ -195,7 +233,7 @@ class _CenterCreate extends State<CenterCreate>
                   keyboardType: TextInputType.text,
                   inputFormatters: [new LengthLimitingTextInputFormatter(30)],
                   validator: (val) => val.isEmpty ? 'يرجى إدخال العنوان' : null,
-                  onSaved: (val) => New_Model_Centers.address = val,
+                  onSaved: (val) => newModelCenters.address = val,
                 ),
                 //Center type
                 new FormField<String>(
@@ -231,7 +269,7 @@ class _CenterCreate extends State<CenterCreate>
                           value: _myCenterTypeSelection,
                           onChanged: (newVal) {
                             setState(() {
-                              New_Model_Centers.type_id = newVal;
+                              newModelCenters.type_id = newVal;
                               _myCenterTypeSelection = newVal;
                               state.didChange(newVal);
                             });
@@ -317,7 +355,7 @@ class _CenterCreate extends State<CenterCreate>
                           }).toList(),
                           onChanged: (newVal) {
                             setState(() {
-                              New_Model_Centers.city_id = newVal;
+                              newModelCenters.city_id = newVal;
                               _myCitySelection = newVal;
                               state.didChange(newVal);
                             });
@@ -348,7 +386,7 @@ class _CenterCreate extends State<CenterCreate>
                     ),
                   ),
                   keyboardType: TextInputType.text,
-                  onSaved: (val) => New_Model_Centers.website = val,
+                  onSaved: (val) => newModelCenters.website = val,
                 ),
                 //Facebook
                 new TextFormField(
@@ -365,7 +403,7 @@ class _CenterCreate extends State<CenterCreate>
                           fontWeight: FontWeight.bold,
                           color: Color(0xFF37505D))),
                   keyboardType: TextInputType.text,
-                  onSaved: (val) => New_Model_Centers.facebook = val,
+                  onSaved: (val) => newModelCenters.facebook = val,
                 ),
                 //Google
                 new TextFormField(
@@ -382,7 +420,7 @@ class _CenterCreate extends State<CenterCreate>
                           fontWeight: FontWeight.bold,
                           color: Color(0xFF37505D))),
                   keyboardType: TextInputType.text,
-                  onSaved: (val) => New_Model_Centers.google = val,
+                  onSaved: (val) => newModelCenters.google = val,
                 ),
                 //Twitter
                 new TextFormField(
@@ -399,7 +437,7 @@ class _CenterCreate extends State<CenterCreate>
                           fontWeight: FontWeight.bold,
                           color: Color(0xFF37505D))),
                   keyboardType: TextInputType.text,
-                  onSaved: (val) => New_Model_Centers.twitter = val,
+                  onSaved: (val) => newModelCenters.twitter = val,
                 ),
                 //Linkedin
                 new TextFormField(
@@ -416,7 +454,7 @@ class _CenterCreate extends State<CenterCreate>
                           fontWeight: FontWeight.bold,
                           color: Color(0xFF37505D))),
                   keyboardType: TextInputType.text,
-                  onSaved: (val) => New_Model_Centers.linkedin = val,
+                  onSaved: (val) => newModelCenters.linkedin = val,
                 ),
                 //Description
                 new TextFormField(
@@ -436,230 +474,66 @@ class _CenterCreate extends State<CenterCreate>
                   inputFormatters: [new LengthLimitingTextInputFormatter(30)],
                   validator: (val) =>
                       val.isEmpty ? 'يرجى إدخال وصف المركز' : null,
-                  onSaved: (val) => New_Model_Centers.description = val,
-                ),
-                //#####Adminstrator inforomation#####//
-                new Padding(
-                  padding: const EdgeInsets.only(top: 20.0),
-                  child: new Text(
-                    "بيانات المسؤل",
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                        fontFamily: ArabicFonts.Cairo,
-                        fontSize: 25.0,
-                        package: 'google_fonts_arabic',
-                        fontWeight: FontWeight.bold,
-                        color: Color(0xFF23AFB1)),
-                  ),
-                ),
-                //Adminstrator
-                new TextFormField(
-                  controller: administratorController,
-                  maxLength: 32,
-                  decoration: new InputDecoration(
-                      contentPadding: const EdgeInsets.symmetric(vertical: 0.0),
-                      counterStyle: TextStyle(color: Color(0xFF37505D)),
-                      prefixIcon: Icon(FontAwesomeIcons.user),
-                      labelText: "الإسم *",
-                      labelStyle: TextStyle(
-                          fontFamily: ArabicFonts.Cairo,
-                          package: 'google_fonts_arabic',
-                          fontWeight: FontWeight.bold,
-                          color: Color(0xFF37505D))),
-                  keyboardType: TextInputType.text,
-                  inputFormatters: [new LengthLimitingTextInputFormatter(30)],
-                  validator: (val) =>
-                      val.isEmpty ? 'يرجى إدخال إسم المسؤول' : null,
-                  onSaved: (val) => New_Model_Centers.administrator = val,
-                ),
-                //Phone
-                new TextFormField(
-                  controller: phoneController,
-                  maxLength: 10,
-                  decoration: new InputDecoration(
-                    contentPadding: const EdgeInsets.symmetric(vertical: 0.0),
-                    counterStyle: TextStyle(color: Color(0xFF37505D)),
-                    fillColor: Color(0xFF37505D),
-                    prefixIcon: Icon(Icons.phone),
-                    hintText: 'يرجى إدخال الهاتف',
-                    labelText: 'الهاتف *',
-                    labelStyle: TextStyle(
-                      color: Color(0xFF37505D),
-                      fontWeight: FontWeight.bold,
-                      fontFamily: ArabicFonts.Cairo,
-                      package: 'google_fonts_arabic',
-                    ),
-                    hintStyle: TextStyle(
-                      fontFamily: ArabicFonts.Cairo,
-                      package: 'google_fonts_arabic',
-                    ),
-                  ),
-                  keyboardType: TextInputType.phone,
-                  inputFormatters: [
-                    new WhitelistingTextInputFormatter(
-                        new RegExp(r'^[\d -]{1,15}$')),
-                  ],
-                  validator: (value) => isValidPhoneNumber(value)
-                      ? null
-                      : 'يجب إدخال رقم الهاتف كـ (###) ### - ####',
-                  onSaved: (val) => New_Model_Centers.phone = val,
-                ),
-                //email
-                new TextFormField(
-                  controller: emailController,
-                  decoration: new InputDecoration(
-                    contentPadding: const EdgeInsets.symmetric(vertical: 0.0),
-                    counterStyle: TextStyle(color: Color(0xFF37505D)),
-                    hintText: 'you@example.com',
-                    labelText: 'البريد الإلكتروني (إختياري)',
-                    prefixIcon: Icon(Icons.email),
-                    fillColor: Color(0xFF37505D),
-                    labelStyle: TextStyle(
-                      color: Color(0xFF37505D),
-                      fontWeight: FontWeight.bold,
-                      fontFamily: ArabicFonts.Cairo,
-                      package: 'google_fonts_arabic',
-                    ),
-                    hintStyle: TextStyle(
-                      fontFamily: ArabicFonts.Cairo,
-                      package: 'google_fonts_arabic',
-                    ),
-                  ),
-                  validator: (value) => isValidEmail(value)
-                      ? null
-                      : 'من فضلك أدخل بريد أليكترونى صحيح',
-                  keyboardType: TextInputType.emailAddress,
-                  onSaved: (val) => New_Model_Centers.email = val,
-                ),
-                //Password
-                new Column(
-                  children: <Widget>[
-                    new TextFormField(
-                      controller: passwordController,
-                      maxLength: 10,
-                      decoration: new InputDecoration(
-                          counterStyle: TextStyle(color: Color(0xFF37505D)),
-                          prefixIcon: Icon(Icons.lock),
-                          suffixIcon: FlatButton(
-                              onPressed: _toggle,
-                              child:
-                                  new Text(_obscureText ? "إظهار" : "إخفاء")),
-                          hintText: 'إدخل كلمة المرور',
-                          labelText: "كلمة المرور *",
-                          labelStyle: TextStyle(
-                              fontFamily: ArabicFonts.Cairo,
-                              package: 'google_fonts_arabic',
-                              fontWeight: FontWeight.bold,
-                              color: Color(0xFF37505D))),
-                      keyboardType: TextInputType.text,
-                      inputFormatters: [
-                        new LengthLimitingTextInputFormatter(30)
-                      ],
-                      validator: (val) => val.length < 6 || val.isEmpty
-                          ? 'يرجى إدخال كلمة مرور أكبر من 6 أحرف'
-                          : null,
-                      onSaved: (val) => New_Model_Centers.password = val,
-                      obscureText: _obscureText,
-                    ),
-                  ],
-                ),
-                //Re type Password
-                new Column(
-                  children: <Widget>[
-                    new TextFormField(
-                      controller: rePasswordController,
-                      maxLength: 10,
-                      decoration: new InputDecoration(
-                          counterStyle: TextStyle(color: Color(0xFF37505D)),
-                          prefixIcon: Icon(Icons.lock),
-                          suffixIcon: FlatButton(
-                              onPressed: _toggle,
-                              child:
-                                  new Text(_obscureText ? "إظهار" : "إخفاء")),
-                          hintText: 'إعادة إدخال كلمة المرور',
-                          labelText: "إعادة كلمة المرور *",
-                          labelStyle: TextStyle(
-                              fontFamily: ArabicFonts.Cairo,
-                              package: 'google_fonts_arabic',
-                              fontWeight: FontWeight.bold,
-                              color: Color(0xFF37505D))),
-                      keyboardType: TextInputType.text,
-                      inputFormatters: [
-                        new LengthLimitingTextInputFormatter(30)
-                      ],
-                      validator: (value) {
-                        if (value != passwordController.text) {
-                          return 'عفواً كلمة المرور لا تتطابق !';
-                        }
-                      },
-                      obscureText: _obscureText,
-                    ),
-                  ],
-                ),
-                //Identity_number
-                new TextFormField(
-                  controller: identityNumberController,
-                  maxLength: 14,
-                  decoration: new InputDecoration(
-                      contentPadding: const EdgeInsets.symmetric(vertical: 0.0),
-                      counterStyle: TextStyle(color: Color(0xFF37505D)),
-                      labelText: "رقم الهوية *",
-                      prefixIcon: Icon(Icons.confirmation_number),
-                      fillColor: Color(0xFF37505D),
-                      labelStyle: TextStyle(
-                          fontFamily: ArabicFonts.Cairo,
-                          package: 'google_fonts_arabic',
-                          fontWeight: FontWeight.bold,
-                          color: Color(0xFF37505D))),
-                  keyboardType: TextInputType.number,
-                  inputFormatters: [new LengthLimitingTextInputFormatter(30)],
-                  validator: (val) =>
-                      val.isEmpty ? 'يرجى إدخال رقم الهوية' : null,
-                  onSaved: (val) => New_Model_Centers.identity_number = val,
-                ),
-                new Padding(
-                  padding: const EdgeInsets.only(
-                      left: 8.0, right: 8.0, bottom: 10.0),
-                ),
-                //Register
-                new MaterialButton(
-                  height: 40.0,
-                  minWidth: 150.0,
-                  color: Color(0xFFE91E63),
-                  splashColor: Color(0xFFFF1B5E),
-                  textColor: Colors.white,
-                  child: new Text("تسجيل",
-                      style: TextStyle(
-                          fontFamily: ArabicFonts.Cairo,
-                          package: 'google_fonts_arabic',
-                          fontWeight: FontWeight.bold,
-                          color: Colors.white)),
-                  onPressed: () => _submitForm(),
+                  onSaved: (val) => newModelCenters.description = val,
                 ),
               ],
             ),
           ),
         ),
       ),
+      bottomNavigationBar: new Container(
+        color: Colors.white,
+        child: Row(
+          children: <Widget>[
+            Expanded(
+              child: new MaterialButton(
+                onPressed: () => _submitForm(),
+                color: Color(0xFFE91E63),
+                splashColor: Color(0xFF23AFB1),
+                textColor: Colors.white,
+                elevation: 0.2,
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: new Text("تعديل",
+                      style: TextStyle(
+                          fontFamily: ArabicFonts.Cairo,
+                          package: 'google_fonts_arabic',
+                          fontSize: 20.0,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.white)),
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
     );
   }
+//==================================================================
 
+//==================================================================
   bool isValidPhoneNumber(String input) {
     final RegExp regex = new RegExp(r'^\d\d\d\d\d\d\d\d\d\d$');
     return regex.hasMatch(input);
   }
+//==================================================================
 
+//==================================================================
   bool isValidIdNumber(String input) {
     final RegExp regex = new RegExp(r'^\d\d\d\d\d\d\d\d\d\d\d\d\d\d$');
     return regex.hasMatch(input);
   }
+//==================================================================
 
+//==================================================================
   bool isValidEmail(String input) {
     final RegExp regex = new RegExp(
         r"^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,253}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,253}[a-zA-Z0-9])?)*$");
     return regex.hasMatch(input);
   }
+//==================================================================
 
+//==================================================================
   void _submitForm() {
     final FormState form = _formKey.currentState;
 
@@ -668,38 +542,42 @@ class _CenterCreate extends State<CenterCreate>
     } else {
       form.save(); //This invokes each onSaved event
       print('***********************************************************');
-      print('Form save called, New_Model_Centers is now up to date...');
-      print('administrator: ${New_Model_Centers.administrator}');
-      print('password: ${New_Model_Centers.password}');
-      print('Identity Number: ${New_Model_Centers.identity_number}');
-      print('phone: ${New_Model_Centers.phone}');
-      print('Email: ${New_Model_Centers.email}');
-      print('logo: ${New_Model_Centers.logo}');
-      print('type_id: ${New_Model_Centers.type_id}');
-      print('city_id: ${New_Model_Centers.city_id}');
-      print('Address: ${New_Model_Centers.address}');
-      print('longitude: ${New_Model_Centers.longitude}');
-      print('latitude: ${New_Model_Centers.latitude}');
-      print('center: ${New_Model_Centers.center}');
-      print('description: ${New_Model_Centers.description}');
-      print('open_at: ${New_Model_Centers.open_at}');
-      print('close_at: ${New_Model_Centers.close_at}');
-      print('website: ${New_Model_Centers.website}');
-      print('facebook: ${New_Model_Centers.facebook}');
-      print('google: ${New_Model_Centers.google}');
-      print('twitter: ${New_Model_Centers.twitter}');
-      print('linkedin: ${New_Model_Centers.linkedin}');
+      print('Form save called, newModelCenters is now up to date...');
+      print('administrator: ${newModelCenters.administrator}');
+      print('password: ${newModelCenters.password}');
+      print('Identity Number: ${newModelCenters.identity_number}');
+      print('phone: ${newModelCenters.phone}');
+      print('Email: ${newModelCenters.email}');
+      print('logo: ${newModelCenters.logo}');
+      print('type_id: ${newModelCenters.type_id}');
+      print('city_id: ${newModelCenters.city_id}');
+      print('Address: ${newModelCenters.address}');
+      print('longitude: ${newModelCenters.longitude}');
+      print('latitude: ${newModelCenters.latitude}');
+      print('center: ${newModelCenters.center}');
+      print('description: ${newModelCenters.description}');
+      print('open_at: ${newModelCenters.open_at}');
+      print('close_at: ${newModelCenters.close_at}');
+      print('website: ${newModelCenters.website}');
+      print('facebook: ${newModelCenters.facebook}');
+      print('google: ${newModelCenters.google}');
+      print('twitter: ${newModelCenters.twitter}');
+      print('linkedin: ${newModelCenters.linkedin}');
       print('***********************************************************');
       print('Submitting to back end...');
-      var cardService = new ApiCentersServices();
-      cardService.createCenters(New_Model_Centers).then(
-          (value) => showMessage(' تم إنشاء حساب مشترك جديد  ! ', Colors.blue));
+      var cardService = new ApiEditCentersServices();
+      cardService.editCenters(newModelCenters).then(
+          (value) => showMessage(' تم تعديل البيانات  بنجاح  ! ', Colors.blue));
       print('######################################################');
     }
   }
+//==================================================================
 
+// ==================================================================
   void showMessage(String message, [MaterialColor color = Colors.red]) {
     _scaffoldKey.currentState.showSnackBar(
         new SnackBar(backgroundColor: color, content: new Text(message)));
   }
+//==================================================================
+
 }

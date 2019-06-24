@@ -9,7 +9,7 @@ import 'package:takaful/model/ModelCenters.dart';
 import 'package:takaful/model/ModelClient.dart';
 import 'package:takaful/model/ModelDoctors.dart';
 
-class Api_Centers_Services {
+class ApiCentersServices {
   static const _serviceUrl = 'http://23.111.185.155:4000/takaful/api/center';
   static final _headers = {'Content-Type': 'application/json'};
 
@@ -102,7 +102,193 @@ class Api_Centers_Services {
   }
 }
 
-class Api_Admin_Services {
+class ApiEditCentersServices {
+  static const _serviceUrl = 'http://23.111.185.155:4000/takaful/api/center';
+  static final _headers = {'Content-Type': 'application/json'};
+
+  Future<ModelCenters> editCenters(ModelCenters modelCenters) async {
+    try {
+      String json = _toJson(modelCenters);
+      final response =
+          await http.post(_serviceUrl, headers: _headers, body: json).then(
+        (response) {
+          print("Response status: ${response.statusCode}");
+          print("Response body: ${response.body}");
+        },
+      );
+      var c = _fromJson(response.body);
+      return c;
+    } catch (e) {
+      print('Server Exception!!!');
+      print(e);
+      return null;
+    }
+  }
+
+  ModelCenters _fromJson(String json) {
+    Map<String, dynamic> map = jsonDecode(json);
+    var modelCenters = new ModelCenters();
+    modelCenters.center_id = map['center_id'];
+    modelCenters.admin_id = map['admin_id'];
+    modelCenters.center = map['center'];
+    modelCenters.type_id = map['type_id'];
+    modelCenters.password = map['password'];
+    modelCenters.type_ar = map['type_ar'];
+    modelCenters.type_en = map['type_en'];
+    modelCenters.description = map['description'];
+    modelCenters.administrator = map['administrator'];
+    modelCenters.identity_number = map['identity_number'];
+    modelCenters.email = map['email'];
+    modelCenters.address = map['address'];
+    modelCenters.longitude = map['longitude'];
+    modelCenters.latitude = map['latitude'];
+    modelCenters.logo = map['logo'];
+    modelCenters.profile = map['profile'];
+    modelCenters.open_at = map['open_at'];
+    modelCenters.close_at = map['close_at'];
+    modelCenters.website = map['website'];
+    modelCenters.facebook = map['facebook'];
+    modelCenters.google = map['google'];
+    modelCenters.phone = map['phone'];
+    modelCenters.twitter = map['twitter'];
+    modelCenters.linkedin = map['linkedin'];
+    modelCenters.license = map['license'];
+    modelCenters.country_ar = map['country_ar'];
+    modelCenters.country_en = map['country_en'];
+    modelCenters.country_code = map['country_code'];
+    modelCenters.city_ar = map['city_ar'];
+    modelCenters.city_en = map['city_en'];
+    modelCenters.city_id = map['city_id'];
+    modelCenters.admin_join_date = map['admin_join_date'];
+    modelCenters.Expire_from = map['Expire_from'];
+    modelCenters.Expire_to = map['Expire_to'];
+    modelCenters.join_date = map['join_date'];
+    return modelCenters;
+  }
+
+  String _toJson(ModelCenters modelCenters) {
+    var mapData = new Map();
+    mapData["center"] = modelCenters.center;
+    mapData["type_id"] = modelCenters.type_id;
+    mapData["password"] = modelCenters.password;
+    mapData["description"] = modelCenters.description;
+    mapData["administrator"] = modelCenters.administrator;
+    mapData["identity_number"] = modelCenters.identity_number;
+    mapData["email"] = modelCenters.email;
+    mapData["address"] = modelCenters.address;
+    mapData["longitude"] = modelCenters.longitude;
+    mapData["latitude"] = modelCenters.latitude;
+    mapData["phone"] = modelCenters.phone;
+    mapData["logo"] = modelCenters.logo;
+    mapData["open_at"] = modelCenters.open_at;
+    mapData["close_at"] = modelCenters.close_at;
+    mapData["website"] = modelCenters.website;
+    mapData["facebook"] = modelCenters.facebook;
+    mapData["google"] = modelCenters.google;
+    mapData["twitter"] = modelCenters.twitter;
+    mapData["linkedin"] = modelCenters.linkedin;
+    mapData["license"] = modelCenters.license;
+    mapData["city_id"] = modelCenters.city_id;
+
+    String json = jsonEncode(mapData);
+    return json;
+  }
+}
+
+class ApiEditAdministratorServices {
+  static const _serviceUrl = 'http://23.111.185.155:4000/takaful/api/center';
+  static final _headers = {'Content-Type': 'application/json'};
+
+  Future<ModelCenters> editAdministrator(ModelCenters modelCenters) async {
+    try {
+      String json = _toJson(modelCenters);
+      final response =
+          await http.post(_serviceUrl, headers: _headers, body: json).then(
+        (response) {
+          print("Response status: ${response.statusCode}");
+          print("Response body: ${response.body}");
+        },
+      );
+      var c = _fromJson(response.body);
+      return c;
+    } catch (e) {
+      print('Server Exception!!!');
+      print(e);
+      return null;
+    }
+  }
+
+  ModelCenters _fromJson(String json) {
+    Map<String, dynamic> map = jsonDecode(json);
+    var modelCenters = new ModelCenters();
+    modelCenters.center_id = map['center_id'];
+    modelCenters.admin_id = map['admin_id'];
+    modelCenters.center = map['center'];
+    modelCenters.type_id = map['type_id'];
+    modelCenters.password = map['password'];
+    modelCenters.type_ar = map['type_ar'];
+    modelCenters.type_en = map['type_en'];
+    modelCenters.description = map['description'];
+    modelCenters.administrator = map['administrator'];
+    modelCenters.identity_number = map['identity_number'];
+    modelCenters.email = map['email'];
+    modelCenters.address = map['address'];
+    modelCenters.longitude = map['longitude'];
+    modelCenters.latitude = map['latitude'];
+    modelCenters.logo = map['logo'];
+    modelCenters.profile = map['profile'];
+    modelCenters.open_at = map['open_at'];
+    modelCenters.close_at = map['close_at'];
+    modelCenters.website = map['website'];
+    modelCenters.facebook = map['facebook'];
+    modelCenters.google = map['google'];
+    modelCenters.phone = map['phone'];
+    modelCenters.twitter = map['twitter'];
+    modelCenters.linkedin = map['linkedin'];
+    modelCenters.license = map['license'];
+    modelCenters.country_ar = map['country_ar'];
+    modelCenters.country_en = map['country_en'];
+    modelCenters.country_code = map['country_code'];
+    modelCenters.city_ar = map['city_ar'];
+    modelCenters.city_en = map['city_en'];
+    modelCenters.city_id = map['city_id'];
+    modelCenters.admin_join_date = map['admin_join_date'];
+    modelCenters.Expire_from = map['Expire_from'];
+    modelCenters.Expire_to = map['Expire_to'];
+    modelCenters.join_date = map['join_date'];
+    return modelCenters;
+  }
+
+  String _toJson(ModelCenters modelCenters) {
+    var mapData = new Map();
+    mapData["center"] = modelCenters.center;
+    mapData["type_id"] = modelCenters.type_id;
+    mapData["password"] = modelCenters.password;
+    mapData["description"] = modelCenters.description;
+    mapData["administrator"] = modelCenters.administrator;
+    mapData["identity_number"] = modelCenters.identity_number;
+    mapData["email"] = modelCenters.email;
+    mapData["address"] = modelCenters.address;
+    mapData["longitude"] = modelCenters.longitude;
+    mapData["latitude"] = modelCenters.latitude;
+    mapData["phone"] = modelCenters.phone;
+    mapData["logo"] = modelCenters.logo;
+    mapData["open_at"] = modelCenters.open_at;
+    mapData["close_at"] = modelCenters.close_at;
+    mapData["website"] = modelCenters.website;
+    mapData["facebook"] = modelCenters.facebook;
+    mapData["google"] = modelCenters.google;
+    mapData["twitter"] = modelCenters.twitter;
+    mapData["linkedin"] = modelCenters.linkedin;
+    mapData["license"] = modelCenters.license;
+    mapData["city_id"] = modelCenters.city_id;
+
+    String json = jsonEncode(mapData);
+    return json;
+  }
+}
+
+class ApiAdminServices {
   static const _serviceUrl = 'http://23.111.185.155:4000/takaful/api/admin';
   static final _headers = {'Content-Type': 'application/json'};
 
@@ -146,7 +332,7 @@ class Api_Admin_Services {
   }
 }
 
-class Api_Card_Services {
+class ApiCardServices {
   static const _serviceUrl = 'http://23.111.185.155:4000/takaful/api/card';
   static final _headers = {'Content-Type': 'application/json'};
 
@@ -199,67 +385,67 @@ class Api_Card_Services {
   }
 }
 
-class Api_Client_Services {
+class ApiClientServices {
   static const _serviceUrl = 'http://23.111.185.155:4000/takaful/api/client';
   static final _headers = {'Content-Type': 'application/json'};
 
-  Future<Model_Client> createClient(Model_Client Model_Client_instans) async {
-//    try {
-    String json = _toJson(Model_Client_instans);
-    final response =
-        await http.post(_serviceUrl, headers: _headers, body: json);
+  Future<Model_Client> createClient(Model_Client modelClientinstans) async {
+    try {
+      String json = _toJson(modelClientinstans);
+      final response =
+          await http.post(_serviceUrl, headers: _headers, body: json);
 
-    var c = _fromJson(response.body);
-    return c;
-//    } catch (e) {
-//      print('Server Exception!!!');
-//      print(e);
-//      return null;
-//    }
+      var c = _fromJson(response.body);
+      return c;
+    } catch (e) {
+      print('Server Exception!!!');
+      print(e);
+      return null;
+    }
   }
 
   Model_Client _fromJson(String json) {
     Map<String, dynamic> map = jsonDecode(json);
-    var Model_Client_instans = new Model_Client();
-    Model_Client_instans.city_id = map['city_id'];
-    Model_Client_instans.address_text = map['address_text'];
-    Model_Client_instans.subscription_number = map['subscription_number'];
-    Model_Client_instans.identity_number = map['identity_number'];
-    Model_Client_instans.name = map['name'];
-    Model_Client_instans.gender = map['gender'];
-    Model_Client_instans.phone = map['phone'];
-    Model_Client_instans.email = map['email'];
-    Model_Client_instans.password = map['password'];
-    Model_Client_instans.birth_date =
+    var modelClientinstans = new Model_Client();
+    modelClientinstans.city_id = map['city_id'];
+    modelClientinstans.address_text = map['address_text'];
+    modelClientinstans.subscription_number = map['subscription_number'];
+    modelClientinstans.identity_number = map['identity_number'];
+    modelClientinstans.name = map['name'];
+    modelClientinstans.gender = map['gender'];
+    modelClientinstans.phone = map['phone'];
+    modelClientinstans.email = map['email'];
+    modelClientinstans.password = map['password'];
+    modelClientinstans.birth_date =
         DateFormat.yMd().parseStrict(map['birth_date']);
-    return Model_Client_instans;
+    return modelClientinstans;
   }
 
-  String _toJson(Model_Client Model_Client_instans) {
+  String _toJson(Model_Client modelClientinstans) {
     var mapData = new Map();
-    mapData["city_id"] = Model_Client_instans.city_id;
-    mapData["address_text"] = Model_Client_instans.address_text;
-    mapData["subscription_number"] = Model_Client_instans.subscription_number;
-    mapData["identity_number"] = Model_Client_instans.identity_number;
-    mapData["name"] = Model_Client_instans.name;
-    mapData["gender"] = Model_Client_instans.gender;
-    mapData["phone"] = Model_Client_instans.phone;
-    mapData["email"] = Model_Client_instans.email;
-    mapData["password"] = Model_Client_instans.password;
+    mapData["city_id"] = modelClientinstans.city_id;
+    mapData["address_text"] = modelClientinstans.address_text;
+    mapData["subscription_number"] = modelClientinstans.subscription_number;
+    mapData["identity_number"] = modelClientinstans.identity_number;
+    mapData["name"] = modelClientinstans.name;
+    mapData["gender"] = modelClientinstans.gender;
+    mapData["phone"] = modelClientinstans.phone;
+    mapData["email"] = modelClientinstans.email;
+    mapData["password"] = modelClientinstans.password;
     mapData["birth_date"] =
-        DateFormat.yMd().format(Model_Client_instans.birth_date);
+        DateFormat.yMd().format(modelClientinstans.birth_date);
     String json = jsonEncode(mapData);
     return json;
   }
 }
 
-class Api_Doctors_Services {
+class ApiDoctorsServices {
   static const _serviceUrl = 'http://127.0.0.1:4000/takaful/api/doctor';
   static final _headers = {'Content-Type': 'application/json'};
 
-  Future<ModelDoctors> createClient(ModelDoctors Model_Doctors_instans) async {
+  Future<ModelDoctors> createClient(ModelDoctors modelDoctorsinstans) async {
     try {
-      String json = _toJson(Model_Doctors_instans);
+      String json = _toJson(modelDoctorsinstans);
       final response =
           await http.post(_serviceUrl, headers: _headers, body: json);
       var c = _fromJson(response.body);
@@ -273,32 +459,32 @@ class Api_Doctors_Services {
 
   ModelDoctors _fromJson(String json) {
     Map<String, dynamic> map = jsonDecode(json);
-    var Model_Doctors_instans = new ModelDoctors();
-    Model_Doctors_instans.ar_degree = map['ar_degree'];
-    Model_Doctors_instans.department_id = map['department_id'];
-    Model_Doctors_instans.en_degree = map['en_degree'];
-    Model_Doctors_instans.name = map['name'];
-    Model_Doctors_instans.phone = map['phone'];
-    Model_Doctors_instans.doc_email = map['doc_email'];
-    Model_Doctors_instans.gender = map['gender'];
-    return Model_Doctors_instans;
+    var modelDoctorsinstans = new ModelDoctors();
+    modelDoctorsinstans.ar_degree = map['ar_degree'];
+    modelDoctorsinstans.department_id = map['department_id'];
+    modelDoctorsinstans.en_degree = map['en_degree'];
+    modelDoctorsinstans.name = map['name'];
+    modelDoctorsinstans.phone = map['phone'];
+    modelDoctorsinstans.doc_email = map['doc_email'];
+    modelDoctorsinstans.gender = map['gender'];
+    return modelDoctorsinstans;
   }
 
-  String _toJson(ModelDoctors Model_Doctors_instans) {
+  String _toJson(ModelDoctors modelDoctorsinstans) {
     var mapData = new Map();
-    mapData["department_id"] = Model_Doctors_instans.department_id;
-    mapData["ar_degree"] = Model_Doctors_instans.ar_degree;
-    mapData["en_degree"] = Model_Doctors_instans.en_degree;
-    mapData["name"] = Model_Doctors_instans.name;
-    mapData["phone"] = Model_Doctors_instans.phone;
-    mapData["doc_email"] = Model_Doctors_instans.doc_email;
-    mapData["gender"] = Model_Doctors_instans.gender;
+    mapData["department_id"] = modelDoctorsinstans.department_id;
+    mapData["ar_degree"] = modelDoctorsinstans.ar_degree;
+    mapData["en_degree"] = modelDoctorsinstans.en_degree;
+    mapData["name"] = modelDoctorsinstans.name;
+    mapData["phone"] = modelDoctorsinstans.phone;
+    mapData["doc_email"] = modelDoctorsinstans.doc_email;
+    mapData["gender"] = modelDoctorsinstans.gender;
     String json = jsonEncode(mapData);
     return json;
   }
 }
 
-class Api_Login_Services {
+class ApiLoginServices {
   static const _serviceUrl =
       'http://23.111.185.155:4000/takaful/api/client_login';
   static final _headers = {'Content-Type': 'application/json'};

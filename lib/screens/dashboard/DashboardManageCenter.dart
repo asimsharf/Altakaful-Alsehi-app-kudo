@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts_arabic/fonts.dart';
 import 'package:takaful/language/app_translations.dart';
-import 'package:takaful/screens/dashboard/Admins.dart';
+import 'package:takaful/screens/dashboard/Administrator.dart';
 import 'package:takaful/screens/dashboard/Doctors.dart';
 import 'package:takaful/screens/dashboard/Serivces.dart';
 
-import 'Bloggers.dart';
 import 'Bookings.dart';
 import 'Centers.dart';
 import 'Department.dart';
+import 'News.dart';
 import 'Offers.dart';
 import 'Settings.dart';
 
@@ -55,7 +55,7 @@ class DashboardManageCenter extends StatelessWidget {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => Admins(),
+                    builder: (context) => Administrator(),
                   ),
                 );
               },
@@ -119,7 +119,7 @@ class DashboardManageCenter extends StatelessWidget {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => Bloggers(),
+                    builder: (context) => News(),
                   ),
                 );
               },

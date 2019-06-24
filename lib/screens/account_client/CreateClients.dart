@@ -27,8 +27,6 @@ class _CreateClients extends State<CreateClients>
         ImagePickerListener {
   final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
   final GlobalKey<FormState> _formKey = new GlobalKey<FormState>();
-  Animation<double> _iconAnimation;
-  AnimationController _iconAnimationController;
 
   File _image;
   AnimationController _controllers;
@@ -133,15 +131,6 @@ class _CreateClients extends State<CreateClients>
     );
     imagePicker = new ImagePickerHandler(this, _controllers);
     imagePicker.init();
-
-    _iconAnimationController = new AnimationController(
-        vsync: this, duration: new Duration(milliseconds: 500));
-    _iconAnimation = new CurvedAnimation(
-      parent: _iconAnimationController,
-      curve: Curves.bounceOut,
-    );
-    _iconAnimation.addListener(() => this.setState(() {}));
-    _iconAnimationController.forward();
   }
 
   @override
@@ -662,7 +651,7 @@ class _CreateClients extends State<CreateClients>
       print('######################################################');
       print('Submitting to back end...');
       print('TODO - we will write the submission part next...');
-      var cardService = new Api_Client_Services();
+      var cardService = new ApiClientServices();
       cardService.createClient(_newModelClient).then(
           (value) => showMessage(' تم إنشاء حساب مشترك جديد  ! ', Colors.blue));
       print('######################################################');

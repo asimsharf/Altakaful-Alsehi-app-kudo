@@ -18,6 +18,17 @@ class _OffersState extends State<Offers> {
                 fontWeight: FontWeight.bold,
                 fontSize: 20.0,
                 color: Colors.white)),
+        actions: <Widget>[
+          Padding(
+            padding: const EdgeInsets.all(10.0),
+            child: IconButton(
+                icon: Icon(Icons.add_circle_outline),
+                onPressed: () {
+                  Navigator.popAndPushNamed(context, '/AddOffers');
+                },
+                tooltip: 'إضافة عرض'),
+          ),
+        ],
       ),
     );
   }

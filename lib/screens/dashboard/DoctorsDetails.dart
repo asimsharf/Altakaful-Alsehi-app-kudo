@@ -1,5 +1,9 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:google_fonts_arabic/fonts.dart';
+import 'package:http/http.dart' as http;
+import 'package:takaful/screens/dashboard/Doctors.dart';
 
 class DoctorsDetails extends StatefulWidget {
   int center_id;
@@ -293,33 +297,6 @@ class _DoctorsDetailsState extends State<DoctorsDetails> {
                   ),
                 ),
               ),
-              SizedBox(width: 3.0),
-              Expanded(
-                child: new MaterialButton(
-                  onPressed: () {
-//							    Navigator.push(
-//								    context,
-//								    MaterialPageRoute(
-//									    builder: (context) => DoctorsPages(),
-//								    ),
-//							    );
-                  },
-                  color: Color(0xFFE91E63),
-                  splashColor: Color(0xFF23AFB1),
-                  textColor: Colors.white,
-                  elevation: 0.2,
-                  child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: new Text("تعديل",
-                        style: TextStyle(
-                            fontFamily: ArabicFonts.Cairo,
-                            package: 'google_fonts_arabic',
-                            fontSize: 20.0,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.white)),
-                  ),
-                ),
-              ),
             ],
           ),
         ),
@@ -327,6 +304,7 @@ class _DoctorsDetailsState extends State<DoctorsDetails> {
     );
   }
 
+  //To show dialog button for confirm deleting doctor
   _showWarningDialog(BuildContext context) {
     showDialog(
       context: context,
@@ -362,22 +340,28 @@ class _DoctorsDetailsState extends State<DoctorsDetails> {
               },
             ),
             FlatButton(
-              child: Text('إستمرار',
-                  style: TextStyle(
-                    fontFamily: ArabicFonts.Cairo,
-                    package: 'google_fonts_arabic',
-                    fontSize: 16.0,
-                    fontWeight: FontWeight.bold,
-                    color: Color(0xFFE91E63),
-                  )),
-              onPressed: () {
-                Navigator.pop(context);
-                Navigator.pop(context, true);
-              },
-            )
+                child: Text('إستمرار',
+                    style: TextStyle(
+                      fontFamily: ArabicFonts.Cairo,
+                      package: 'google_fonts_arabic',
+                      fontSize: 16.0,
+                      fontWeight: FontWeight.bold,
+                      color: Color(0xFFE91E63),
+                    )),
+                onPressed: () {
+                  _deleteDoctor();
+                  Navigator.of(context).push(new MaterialPageRoute(
+                      builder: (BuildContext context) => Doctors()));
+                })
           ],
         );
       },
     );
+  }
+
+  //To delete a doctor by ID
+  void _deleteDoctor() {
+    var url = 'http://23.111.185.155:4000/takaful/api/doctor';
+    http.post(url, body: {'doc_id': widget.doc_id});
   }
 }

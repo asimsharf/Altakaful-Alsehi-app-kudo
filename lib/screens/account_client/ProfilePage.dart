@@ -7,8 +7,8 @@ import 'package:flutter/services.dart';
 import 'package:google_fonts_arabic/fonts.dart';
 import 'package:rflutter_alert/rflutter_alert.dart';
 import 'package:takaful/language/app_translations.dart';
-import 'package:takaful/screens/account_client/EditProfilePage.dart';
 import 'package:takaful/screens/account_client/RequestCard.dart';
+import 'package:takaful/screens/account_doctor/EditCreateDoctor.dart';
 import 'package:takaful/screens/image/image_picker_handler.dart';
 
 class ProfilePage extends StatefulWidget {
@@ -78,8 +78,6 @@ class _ProfilePageState extends State<ProfilePage>
 
   @override
   Widget build(BuildContext context) {
-    final width = MediaQuery.of(context).size.width;
-    final height = MediaQuery.of(context).size.height;
     return Scaffold(
       appBar: AppBar(
         title: Text(AppTranslations.of(context).text("tab_profile"),
@@ -455,7 +453,7 @@ class _ProfilePageState extends State<ProfilePage>
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => EditProfilePage(),
+                      builder: (context) => EditDoctor(),
                     ),
                   );
                 },

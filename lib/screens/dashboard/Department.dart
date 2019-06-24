@@ -2,14 +2,11 @@ import 'dart:async';
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts_arabic/fonts.dart';
 import 'package:http/http.dart' as http;
-import 'package:rflutter_alert/rflutter_alert.dart';
 import 'package:takaful/model/ModelDepartment.dart';
 import 'package:takaful/screens/FilterSearch.dart';
-import 'package:takaful/screens/account_client/ProfilePage.dart';
 
 class Department extends StatefulWidget {
   int center_id;
@@ -32,10 +29,6 @@ class Department extends StatefulWidget {
 
 class _DepartmentState extends State<Department> {
   TextEditingController editingController = TextEditingController();
-
-  TextEditingController department_ar_name = TextEditingController();
-  TextEditingController consult_price = TextEditingController();
-  TextEditingController visits_per_day = TextEditingController();
 
   final duplicateItems = List<String>.generate(100, (i) => "$i");
 
@@ -79,7 +72,9 @@ class _DepartmentState extends State<Department> {
             padding: const EdgeInsets.all(10.0),
             child: IconButton(
                 icon: Icon(Icons.add_circle_outline),
-                onPressed: () => _onAddServicesPressed(context),
+                onPressed: () {
+                  Navigator.popAndPushNamed(context, '/AddDepartment');
+                },
                 tooltip: 'إضافة قسم جديد'),
           ),
         ],
@@ -270,8 +265,10 @@ class _DepartmentState extends State<Department> {
                                   ),
                                   Expanded(
                                     child: new MaterialButton(
-                                      onPressed: () =>
-                                          _onEditServicesPressed(context),
+                                      onPressed: () {
+                                        Navigator.popAndPushNamed(
+                                            context, '/EditDepartment');
+                                      },
                                       color: Color(0xFFE91E63),
                                       splashColor: Color(0xFFFF1B5E),
                                       textColor: Colors.white,
@@ -326,179 +323,29 @@ class _DepartmentState extends State<Department> {
     return DepartmentList;
   }
 
-  // التعديل على بيانات الخدمة
-  _onEditServicesPressed(context) {
-    Alert(
-        context: context,
-        title: "تعديل القسم",
-        content: Column(
-          children: <Widget>[
-            //نوع الخدمة
-            new TextFormField(
-              decoration: new InputDecoration(
-                  contentPadding: const EdgeInsets.symmetric(vertical: 10.0),
-                  counterStyle: TextStyle(color: Color(0xFF37505D)),
-                  prefixIcon: Icon(FontAwesomeIcons.typo3),
-                  labelText: "إسم القسم *",
-                  labelStyle: TextStyle(
-                      fontFamily: ArabicFonts.Cairo,
-                      package: 'google_fonts_arabic',
-                      fontSize: 10.0,
-                      fontWeight: FontWeight.bold,
-                      color: Color(0xFF37505D))),
-              keyboardType: TextInputType.text,
-              inputFormatters: [new LengthLimitingTextInputFormatter(30)],
-              validator: (val) => val.isEmpty ? 'يرجى إدخال إسم القسم' : null,
-            ),
-            // سعر الإستشارة
-            new TextFormField(
-              decoration: new InputDecoration(
-                  contentPadding: const EdgeInsets.symmetric(vertical: 10.0),
-                  counterStyle: TextStyle(color: Color(0xFF37505D)),
-                  labelText: "سعر الإستشارة *",
-                  fillColor: Color(0xFF37505D),
-                  prefixIcon: Icon(FontAwesomeIcons.cashRegister),
-                  labelStyle: TextStyle(
-                      fontFamily: ArabicFonts.Cairo,
-                      package: 'google_fonts_arabic',
-                      fontSize: 10.0,
-                      fontWeight: FontWeight.bold,
-                      color: Color(0xFF37505D))),
-              keyboardType: TextInputType.phone,
-            ),
-            // عدد زوار اليوم
-            new TextFormField(
-              decoration: new InputDecoration(
-                  contentPadding: const EdgeInsets.symmetric(vertical: 10.0),
-                  counterStyle: TextStyle(color: Color(0xFF37505D)),
-                  labelText: "عدد زوار اليوم *",
-                  fillColor: Color(0xFF37505D),
-                  prefixIcon: Icon(FontAwesomeIcons.cashRegister),
-                  labelStyle: TextStyle(
-                      fontFamily: ArabicFonts.Cairo,
-                      package: 'google_fonts_arabic',
-                      fontSize: 10.0,
-                      fontWeight: FontWeight.bold,
-                      color: Color(0xFF37505D))),
-              keyboardType: TextInputType.phone,
-            ),
-          ],
-        ),
-        buttons: [
-          DialogButton(
-            onPressed: () => _onBasicAlertPressedOkay(context),
-            color: Color(0xFFE91E63),
-            child: Text(
-              "تعديل",
-              style: TextStyle(color: Colors.white, fontSize: 20),
-            ),
-          )
-        ]).show();
-  }
-
-//إضافة خدمة جديدة
-  _onAddServicesPressed(context) {
-    Alert(
-        context: context,
-        title: "إضافة قسم جديدة",
-        content: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: <Widget>[
-            //نوع الخدمة
-            new TextFormField(
-              controller: department_ar_name,
-              decoration: new InputDecoration(
-                  contentPadding: const EdgeInsets.symmetric(vertical: 10.0),
-                  counterStyle: TextStyle(color: Color(0xFF37505D)),
-                  prefixIcon: Icon(FontAwesomeIcons.typo3),
-                  labelText: "نوع الخدمة *",
-                  labelStyle: TextStyle(
-                      fontFamily: ArabicFonts.Cairo,
-                      package: 'google_fonts_arabic',
-                      fontSize: 10.0,
-                      fontWeight: FontWeight.bold,
-                      color: Color(0xFF37505D))),
-              keyboardType: TextInputType.text,
-              inputFormatters: [new LengthLimitingTextInputFormatter(30)],
-              validator: (val) => val.isEmpty ? 'يرجى إدخال نوع الخدمة' : null,
-            ),
-            // سعر الإستشارة
-            new TextFormField(
-              controller: consult_price,
-              decoration: new InputDecoration(
-                  contentPadding: const EdgeInsets.symmetric(vertical: 10.0),
-                  counterStyle: TextStyle(color: Color(0xFF37505D)),
-                  labelText: "سعر الإستشارة *",
-                  fillColor: Color(0xFF37505D),
-                  prefixIcon: Icon(FontAwesomeIcons.cashRegister),
-                  labelStyle: TextStyle(
-                      fontFamily: ArabicFonts.Cairo,
-                      package: 'google_fonts_arabic',
-                      fontWeight: FontWeight.bold,
-                      fontSize: 10.0,
-                      color: Color(0xFF37505D))),
-              keyboardType: TextInputType.phone,
-            ),
-            // عدد زوار اليوم
-            new TextFormField(
-              controller: visits_per_day,
-              decoration: new InputDecoration(
-                  contentPadding: const EdgeInsets.symmetric(vertical: 10.0),
-                  counterStyle: TextStyle(color: Color(0xFF37505D)),
-                  labelText: "عدد زوار اليوم *",
-                  fillColor: Color(0xFF37505D),
-                  prefixIcon: Icon(FontAwesomeIcons.cashRegister),
-                  labelStyle: TextStyle(
-                      fontFamily: ArabicFonts.Cairo,
-                      package: 'google_fonts_arabic',
-                      fontSize: 10.0,
-                      fontWeight: FontWeight.bold,
-                      color: Color(0xFF37505D))),
-              keyboardType: TextInputType.phone,
-            ),
-          ],
-        ),
-        buttons: [
-          DialogButton(
-            onPressed: () => _onBasicAlertPressedOkay(context),
-            color: Color(0xFFE91E63),
-            child: Text(
-              "إضافة",
-              style: TextStyle(color: Colors.white, fontSize: 20),
-            ),
-          )
-        ]).show();
-  }
-
-//تمت عملة التحقق بنجاح
-  _onBasicAlertPressedOkay(context) {
-    Alert(
-      context: context,
-      title: "التحقق من البطاقة",
-      type: AlertType.success,
-      desc: "تمت عملية التحقق من البطاقة بنجاح",
-      buttons: [
-        DialogButton(
-          child: Text(
-            "موافق",
-            style: TextStyle(color: Colors.white, fontSize: 20),
-          ),
-          onPressed: () => Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) => ProfilePage(),
-              )),
-          color: Color(0xFFE91E63),
-        )
-      ],
-    ).show();
-  }
-
-//التحقق من ان رقم البطاقة صحيح
-  bool isValidIdNumber(String input) {
-    final RegExp regex = new RegExp(r'^\d\d\d\d\d\d\d\d\d\d\d\d\d\d$');
-    return regex.hasMatch(input);
-  }
+////تمت عملة التحقق بنجاح
+//  _onDeleteButtonPress(context) {
+//    Alert(
+//      context: context,
+//      title: "إجراء حذف عنصر",
+//      type: AlertType.success,
+//      desc: "تمت عملية الحذف بنجاح",
+//      buttons: [
+//        DialogButton(
+//          child: Text(
+//            "موافق",
+//            style: TextStyle(color: Colors.white, fontSize: 20),
+//          ),
+//          onPressed: () => Navigator.push(
+//              context,
+//              MaterialPageRoute(
+//                builder: (context) => ProfilePage(),
+//              )),
+//          color: Color(0xFFE91E63),
+//        )
+//      ],
+//    ).show();
+//  }
 
   void filterSearchResults(String query) {
     List<String> dummySearchList = List<String>();
